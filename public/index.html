@@ -1,12 +1,1842 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Hello, World!</title>
-	</head>
-	<body>
-		<h1 id="heading">Hello, World!</h1>
-		<p>This page comes from a static asset stored at `public/index.html` as configured in `wrangler.jsonc`.</p>
-	</body>
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wiktor Filipowski · digitalizacja procesów produkcyjnych</title>
+
+<!-- ==========================================================
+     ADRES STRONY
+     Poniżej, w czterech linijkach, występuje adres zastępczy:
+         https://wiktorfilipowski.pl
+     Gdy strona trafi na serwer, zamień go na jej prawdziwy adres.
+     Najprościej: otwórz ten plik w edytorze tekstu, wciśnij
+     Ctrl+H i zamień wszystkie wystąpienia na raz.
+     Dotyczy to linijek: canonical, og:url, og:image, twitter:image.
+     Nic innego w pliku nie wymaga zmiany.
+
+     Obok pliku HTML wgraj także og-image.png, favicon.png
+     i favicon-32.png, bo do nich prowadzą powyższe adresy.
+
+     Jeśli nie zmienisz adresu, strona nadal będzie działać.
+     Nie pojawi się tylko obrazek w podglądzie po wysłaniu linku
+     na LinkedInie, Messengerze czy Slacku.
+     ========================================================== -->
+<meta name="description" content="Projektuję i wdrażam aplikacje dla produkcji i serwisu. Pięć wdrożonych rozwiązań z klikalnymi demo: klasyfikacja usterek, system Andon, konfigurator urządzeń.">
+<meta name="author" content="Wiktor Filipowski">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0b0d10">
+<link rel="canonical" href="https://wiktorfilipowski.pl/">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:site_name" content="Wiktor Filipowski">
+<meta property="og:title" content="Tworzę rozwiązania cyfrowe, które sprawdzają się w praktyce">
+<meta property="og:description" content="Znam środowisko produkcyjne od środka. Pięć wdrożonych aplikacji dla produkcji i serwisu, każda z klikalnym demo.">
+<meta property="og:url" content="https://wiktorfilipowski.pl/">
+<meta property="og:image" content="https://wiktorfilipowski.pl/og-image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Wiktor Filipowski · digitalizacja i automatyzacja procesów produkcyjnych">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tworzę rozwiązania cyfrowe, które sprawdzają się w praktyce">
+<meta name="twitter:description" content="Znam środowisko produkcyjne od środka. Pięć wdrożonych aplikacji dla produkcji i serwisu, każda z klikalnym demo.">
+<meta name="twitter:image" content="https://wiktorfilipowski.pl/og-image.png">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230b0d10'/%3E%3Cpath d='M13,20L24,46L32,30L40,46L51,20' fill='none' stroke='%232ee08f' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
+<style>
+:root{
+  color-scheme: light;
+  --st-950:#0b0d10; --st-900:#12151a; --st-850:#181c22; --st-800:#1f242b; --st-700:#2b3138; --st-600:#3a424b; --st-500:#525b66;
+  --cn-0:#ffffff; --cn-50:#f8f8f6; --cn-100:#f1f1ee; --cn-200:#e5e5e0; --cn-300:#d4d4cd;
+  --ink:#0b0d10; --ink2:#484e56; --ink3:#767d86;
+  --dfg:#e2e6ea; --dfg2:#98a2ad; --dfg3:#6b7681;
+  --grn:#0b7d55; --grn-d:#075c3e; --grn-sf:#e2f4ec; --grn-ln:#a3d6c1; --grn-hi:#2ee08f;
+  --amb:#8a5710; --amb-sf:#fbf0d9; --amb-hi:#f0b83f;
+  --red:#9f2b2b; --red-sf:#fbe9e9; --red-hi:#ff6f6f;
+  --blu:#1a5f9e; --blu-sf:#e8f1fa; --blu-hi:#5fb4ff;
+  --vio:#4a41ad; --vio-sf:#ecebfd; --vio-hi:#a79cff;
+  --mono:ui-monospace,"SFMono-Regular","JetBrains Mono",Menlo,Consolas,monospace;
+  --r:3px; --r2:5px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0; background:var(--cn-50); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-weight:500; line-height:1.2; margin:0; letter-spacing:-.01em}
+h1{font-size:clamp(30px,5vw,46px); letter-spacing:-.028em}
+h2{font-size:clamp(22px,3vw,29px); letter-spacing:-.02em}
+h3{font-size:19px} h4{font-size:15px}
+p{margin:0}
+a{color:var(--grn); text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1120px; margin:0 auto; padding:0 28px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.m{font-family:var(--mono)}
+
+/* ---------- chrome ---------- */
+nav{position:sticky; top:0; z-index:60; background:rgba(11,13,16,.96); backdrop-filter:blur(10px); border-bottom:1px solid var(--st-700)}
+nav .wrap{display:flex; align-items:center; justify-content:space-between; height:56px; gap:18px}
+.brand{font-family:var(--mono); font-size:13px; letter-spacing:.06em; color:var(--dfg); text-transform:uppercase}
+.brand i{color:var(--grn-hi); font-style:normal}
+.navlinks{display:flex; gap:2px}
+.navlinks a{font-family:var(--mono); font-size:11.5px; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--dfg2); padding:6px 11px; border-radius:var(--r)}
+.navlinks a:hover{color:var(--grn-hi); background:rgba(46,224,143,.08); text-decoration:none}
+@media(max-width:760px){.navlinks{display:none}}
+
+section{padding:74px 0; border-bottom:1px solid var(--cn-200); position:relative}
+section[id]{scroll-margin-top:68px}
+.shead{display:flex; align-items:baseline; gap:14px; margin-bottom:26px}
+.snum{font-family:var(--mono); font-size:11.5px; letter-spacing:.12em; color:var(--grn); padding-top:4px}
+.eyebrow{font-family:var(--mono); font-size:11.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--ink3)}
+.lead{font-size:18px; color:var(--ink2); line-height:1.65; max-width:66ch}
+.rule{height:1px; background:var(--cn-200); margin:0}
+
+/* ---------- hero ---------- */
+#hero{background:var(--st-950); color:var(--dfg); border-bottom:1px solid var(--st-700); padding:0; overflow:hidden}
+#hero .wrap{padding-top:82px; padding-bottom:92px; position:relative; z-index:2}
+.hatch{position:absolute; inset:0; z-index:1; opacity:.5;
+  background-image:repeating-linear-gradient(45deg, rgba(255,255,255,.028) 0 1px, transparent 1px 9px)}
+.hero-grid{display:grid; grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr); gap:16px 60px; align-items:start}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr; gap:38px}}
+.hero-meta{display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:11.5px;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--grn-hi); margin-bottom:22px}
+.hero-meta span.b{width:22px; height:1px; background:var(--grn-hi); display:inline-block; flex:none}
+#hero h1{color:#fff; text-wrap:balance}
+#hero h1 em{font-style:normal; color:var(--grn-hi)}
+.hero-lead{font-size:17px; color:var(--dfg2); line-height:1.68; margin-top:20px}
+.hero-cta{display:flex; gap:10px; flex-wrap:wrap; margin-top:30px}
+.spec{border:1px solid var(--st-700); border-radius:var(--r2); background:rgba(255,255,255,.017)}
+.spec-h{display:flex; align-items:center; justify-content:space-between; font-family:var(--mono); font-size:10px;
+  letter-spacing:.13em; text-transform:uppercase; color:var(--dfg3); padding:11px 15px; border-bottom:1px solid var(--st-700)}
+.spec-r{display:grid; grid-template-columns:26px 1fr; gap:12px; align-items:baseline; padding:11px 15px;
+  border-bottom:1px solid var(--st-800); color:var(--dfg2)}
+.spec-r:last-child{border-bottom:0}
+.spec-r:hover{background:rgba(46,224,143,.055); text-decoration:none}
+.spec-r:hover .spec-t{color:#fff}
+.spec-n{font-family:var(--mono); font-size:11px; color:var(--grn-hi); letter-spacing:.05em}
+.spec-t{font-size:13.5px; display:block; line-height:1.4}
+.spec-m{font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--st-500); display:block; margin-top:3px}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex; align-items:center; gap:7px; font:inherit; font-size:13.5px; cursor:pointer;
+  background:var(--cn-0); color:var(--ink); border:1px solid var(--cn-300); border-radius:var(--r); padding:8px 15px;
+  transition:border-color .12s, background .12s}
+.btn:hover{border-color:var(--ink3); background:var(--cn-100)}
+.btn-p{background:var(--grn); color:#fff; border-color:var(--grn)}
+.btn-p:hover{background:var(--grn-d); border-color:var(--grn-d)}
+.btn-o{background:transparent; color:var(--grn-hi); border-color:var(--st-600)}
+.btn-o:hover{background:rgba(46,224,143,.1); border-color:var(--grn-hi)}
+.btn-sm{font-size:12.5px; padding:6px 12px}
+.btn-xs{font-family:var(--mono); font-size:11px; padding:3px 9px; letter-spacing:.03em}
+.btn:disabled{opacity:.4; cursor:default}
+.btn:disabled:hover{border-color:var(--cn-300); background:var(--cn-0)}
+
+/* ---------- stats / how ---------- */
+.grid-b{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); border-top:1px solid var(--cn-200); border-left:1px solid var(--cn-200)}
+.gb{padding:24px 26px 26px; border-right:1px solid var(--cn-200); border-bottom:1px solid var(--cn-200); background:var(--cn-0)}
+.gb-n{font-family:var(--mono); font-size:11px; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--grn); margin-bottom:12px}
+.gb-n .ar{color:var(--cn-300); margin-left:4px}
+@media(max-width:900px){.gb-n .ar{display:none}}
+.gb p{font-size:14.5px; color:var(--ink2); margin-top:8px}
+
+/* ---------- projects ---------- */
+.projects{border-top:1px solid var(--cn-200)}
+.proj{border-bottom:1px solid var(--cn-200); background:var(--cn-0)}
+.proj.feat{border-left:2px solid var(--grn)}
+.proj-head{padding:26px 30px 30px}
+.pmeta{display:flex; align-items:center; gap:12px; margin-bottom:11px; flex-wrap:wrap}
+.pidx{font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; color:var(--ink3)}
+.proj.feat .pidx{color:var(--grn)}
+.pbar{height:1px; width:26px; background:var(--cn-300); display:inline-block; flex:none}
+/* dwa osobne pola: okres realizacji i charakter projektu, wizualnie rozdzielone */
+.proj-date{font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--ink3); white-space:nowrap}
+.ptype{font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--ink2); white-space:nowrap}
+.ptype::before{content:"·"; color:var(--cn-300); margin:0 8px}
+.badge{font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; background:var(--grn);
+  color:#fff; border-radius:2px; padding:3px 8px}
+.proj-hook{font-size:15.5px; color:var(--ink2); margin-top:10px; max-width:76ch}
+.proj-bul{list-style:none; padding:0; margin:18px 0 0; max-width:82ch}
+.proj-bul li{position:relative; padding-left:22px; font-size:14.5px; color:var(--ink2); margin-bottom:8px}
+.proj-bul li::before{content:""; position:absolute; left:1px; top:10px; width:9px; height:1px; background:var(--grn)}
+.proj-more{display:none; border-top:1px solid var(--cn-200); margin-top:20px; padding-top:18px}
+.proj-more.on{display:block}
+.proj-res{font-size:14.5px; color:var(--ink2); margin-top:16px; padding:16px 18px; background:var(--cn-100);
+  border-left:2px solid var(--grn); border-radius:0}
+.proj-acts{display:flex; gap:9px; margin-top:22px; flex-wrap:wrap; align-items:center}
+.tags{display:flex; gap:6px; flex-wrap:wrap; margin-top:18px}
+.tag{font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink2);
+  border:1px solid var(--cn-300); border-radius:2px; padding:3px 8px}
+
+/* ================= HMI (dark demo shell) ================= */
+.hmi{display:none; background:var(--st-900); color:var(--dfg); border-top:1px solid var(--st-700);
+  padding:0; font-size:14px}
+.hmi.on{display:block}
+.hmi-bar{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  padding:11px 30px; background:var(--st-950); border-bottom:1px solid var(--st-700)}
+.hmi-t{display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:11px;
+  letter-spacing:.11em; text-transform:uppercase; color:var(--dfg2)}
+.hmi-t b{color:var(--grn-hi); font-weight:400}
+.led{width:7px;height:7px;border-radius:50%;background:var(--grn-hi);box-shadow:0 0 7px var(--grn-hi);flex:none}
+.hmi-body{padding:22px 30px 28px}
+@media(max-width:640px){.hmi-bar{padding:11px 18px} .hmi-body{padding:18px} .proj-head{padding:22px 18px 24px}}
+.hmi .note{font-size:12.5px; color:var(--dfg2); line-height:1.62; border-left:2px solid var(--grn);
+  background:rgba(46,224,143,.05); padding:10px 14px; margin-bottom:18px}
+.hmi .panel{background:var(--st-850); border:1px solid var(--st-700); border-radius:var(--r2); padding:16px}
+.hmi .panel.flush{padding:0; overflow:hidden}
+.hmi .ph{font-family:var(--mono); font-size:10.5px; letter-spacing:.11em; text-transform:uppercase; color:var(--dfg3); margin-bottom:11px}
+.hmi .phbar{font-family:var(--mono); font-size:10.5px; letter-spacing:.11em; text-transform:uppercase; color:var(--dfg2);
+  background:var(--st-800); border-bottom:1px solid var(--st-700); padding:9px 14px; margin:-16px -16px 14px}
+.hmi .mini{font-size:12px; color:var(--dfg3); line-height:1.6}
+.hmi h4{color:#fff}
+.g2{display:grid; grid-template-columns:1.4fr 1fr; gap:16px}
+.g2e{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+.g3{display:grid; grid-template-columns:.95fr 1.25fr .95fr; gap:16px}
+.g4{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px}
+@media(max-width:900px){.g2,.g2e,.g3,.g4{grid-template-columns:1fr}}
+.row{display:flex; align-items:center; gap:9px; flex-wrap:wrap}
+.hmi select,.hmi input,.hmi textarea{font:inherit; font-size:13px; padding:7px 9px; background:var(--st-800);
+  border:1px solid var(--st-600); border-radius:var(--r); color:var(--dfg); max-width:100%}
+.hmi input:focus,.hmi select:focus,.hmi textarea:focus{outline:none; border-color:var(--grn-hi)}
+.hmi textarea{resize:vertical; line-height:1.5; font-size:13px}
+.hmi .btn{background:var(--st-800); color:var(--dfg); border-color:var(--st-600)}
+.hmi .btn:hover{background:var(--st-700); border-color:var(--st-500)}
+.hmi .btn-p{background:var(--grn); color:#04150e; border-color:var(--grn); font-weight:500}
+.hmi .btn-p:hover{background:var(--grn-hi); border-color:var(--grn-hi)}
+.hmi .btn:disabled:hover{background:var(--st-800); border-color:var(--st-600)}
+.hmi table{width:100%; border-collapse:collapse; font-size:12.5px}
+.hmi th{font-family:var(--mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--dfg3);
+  text-align:left; font-weight:400; padding:0 8px 7px 0; border-bottom:1px solid var(--st-700)}
+.hmi td{padding:8px 8px 8px 0; border-bottom:1px solid var(--st-800); color:var(--dfg2)}
+.hmi tr:last-child td{border-bottom:0}
+.num{font-variant-numeric:tabular-nums; text-align:right; padding-right:10px!important; font-family:var(--mono)}
+.pill{font-family:var(--mono); font-size:10.5px; letter-spacing:.05em; border-radius:2px; padding:3px 8px; white-space:nowrap; text-transform:uppercase}
+.pill-g{background:rgba(46,224,143,.14); color:var(--grn-hi)}
+.pill-a{background:rgba(240,184,63,.14); color:var(--amb-hi)}
+.pill-r{background:rgba(255,111,111,.14); color:var(--red-hi)}
+.pill-b{background:rgba(95,180,255,.14); color:var(--blu-hi)}
+.pill-v{background:rgba(167,156,255,.15); color:var(--vio-hi)}
+.pill-n{background:var(--st-800); color:var(--dfg2)}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex:none}
+.tabs{display:inline-flex; background:var(--st-800); border:1px solid var(--st-700); border-radius:var(--r); padding:2px; gap:2px; flex-wrap:wrap}
+.tab{font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; cursor:pointer;
+  border:0; background:transparent; color:var(--dfg3); border-radius:2px; padding:6px 12px}
+.tab.on{background:var(--grn); color:#04150e}
+/* stala wysokosc, zeby dopisywanie linii nie przesuwalo zawartosci pod logiem */
+.log{font-family:var(--mono); font-size:11.5px; line-height:1.8; height:210px; overflow-y:auto;
+  background:var(--st-950); border:1px solid var(--st-700); border-radius:var(--r); padding:11px 12px}
+.log .t{color:var(--st-500)} .log .e{color:var(--red-hi)} .log .w{color:var(--amb-hi)} .log .s{color:var(--grn-hi)}
+.msg{font-size:12.5px; border-radius:var(--r); padding:9px 12px; margin-top:12px; line-height:1.6}
+.msg-ok{background:rgba(46,224,143,.1); color:var(--grn-hi); border-left:2px solid var(--grn-hi)}
+.msg-warn{background:rgba(240,184,63,.1); color:var(--amb-hi); border-left:2px solid var(--amb-hi)}
+.legend{display:flex; gap:15px; flex-wrap:wrap; margin-top:12px; font-family:var(--mono); font-size:10.5px;
+  letter-spacing:.05em; text-transform:uppercase; color:var(--dfg3)}
+.kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(112px,1fr)); border:1px solid var(--st-700); border-radius:var(--r2); overflow:hidden}
+.kpi{padding:12px 14px; border-right:1px solid var(--st-700); background:var(--st-850)}
+.kpi:last-child{border-right:0}
+.kpi-l{font-family:var(--mono); font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--dfg3)}
+.kpi-v{font-size:21px; font-weight:500; font-variant-numeric:tabular-nums; margin-top:3px; color:#fff; font-family:var(--mono)}
+
+/* login */
+.login{max-width:430px; margin:14px auto 6px}
+.login-h{text-align:center; margin-bottom:22px}
+.login-mark{display:inline-flex; align-items:center; gap:9px; font-family:var(--mono); font-size:11px;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--grn-hi); margin-bottom:12px}
+.opt{display:flex; align-items:center; gap:13px; width:100%; text-align:left; font:inherit; cursor:pointer;
+  background:var(--st-850); border:1px solid var(--st-700); border-radius:var(--r); padding:11px 14px; margin-bottom:7px; color:var(--dfg)}
+.opt:hover{border-color:var(--grn-hi); background:var(--st-800)}
+.opt-ic{width:30px;height:30px;border-radius:var(--r);flex:none;display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono); font-size:11px; background:var(--st-700); color:var(--dfg2)}
+.opt-t{font-size:13.5px} .opt-s{font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--dfg3)}
+
+/* andon stations */
+.tvgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(104px,1fr)); gap:9px}
+.tvc{border:1px solid var(--st-700); background:var(--st-800); border-radius:var(--r2); padding:14px 8px; text-align:center; cursor:pointer}
+.tvc:hover{border-color:var(--st-500)}
+.tvc.sel{border-color:var(--grn-hi); box-shadow:inset 0 0 0 1px var(--grn-hi)}
+.tvc.ok{background:rgba(46,224,143,.1); border-color:rgba(46,224,143,.5)}
+.tvc.warn{background:rgba(240,184,63,.1); border-color:rgba(240,184,63,.55)}
+.tvc.err{background:rgba(255,111,111,.1); border-color:rgba(255,111,111,.55)}
+.tvc-h{font-family:var(--mono); font-size:16px; color:#fff; letter-spacing:.06em}
+.tvc-s{font-family:var(--mono); font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--dfg3); margin-top:5px; line-height:1.35}
+.bigbtn{display:block; width:100%; font:inherit; cursor:pointer; text-align:center; border-radius:var(--r2);
+  padding:20px 16px; border:1px solid var(--grn); background:var(--grn); color:#04150e; font-size:16px; font-weight:500}
+.bigbtn:hover{background:var(--grn-hi)}
+.bigbtn.sub{background:var(--st-800); border-color:var(--st-600); color:var(--dfg); font-size:14.5px; padding:15px}
+.bigbtn.sub:hover{background:var(--st-700)}
+.bigbtn.act{background:rgba(240,184,63,.13); border-color:var(--amb-hi); color:var(--amb-hi)}
+.bigbtn:disabled{background:var(--st-800); border-color:var(--st-700); color:var(--dfg3); cursor:default}
+.bigbtn small{display:block; font-family:var(--mono); font-size:10.5px; letter-spacing:.07em; text-transform:uppercase; margin-top:5px; opacity:.75; font-weight:400}
+.cat{display:grid; grid-template-columns:repeat(auto-fit,minmax(184px,1fr)); gap:9px}
+.cat-b{display:flex; align-items:center; gap:10px; text-align:left; font:inherit; font-size:13px; cursor:pointer;
+  background:var(--st-800); border:1px solid var(--st-700); border-radius:var(--r); padding:12px; color:var(--dfg)}
+.cat-b:hover{border-color:var(--st-500)}
+.cat-b.on{border-color:var(--grn-hi); background:rgba(46,224,143,.08)}
+.cat-ic{width:27px;height:27px;border-radius:var(--r);flex:none;display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono); font-size:12px}
+
+/* konfigurator shell */
+.shell{display:grid; grid-template-columns:212px 1fr; border:1px solid var(--st-700); border-radius:var(--r2); overflow:hidden}
+@media(max-width:820px){.shell{grid-template-columns:1fr}}
+.side{background:var(--st-950); border-right:1px solid var(--st-700); padding:12px 10px}
+@media(max-width:820px){.side{border-right:0; border-bottom:1px solid var(--st-700)}}
+.side-h{font-family:var(--mono); font-size:9.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--st-500); padding:6px 8px 8px}
+.nav-i{display:flex; align-items:center; gap:9px; width:100%; text-align:left; font:inherit; font-size:13px; cursor:pointer;
+  background:transparent; border:0; border-radius:var(--r); padding:7px 9px; color:var(--dfg2); margin-bottom:1px}
+.nav-i:hover{background:var(--st-850); color:var(--dfg)}
+.nav-i.on{background:rgba(46,224,143,.1); color:var(--grn-hi)}
+.nav-i .sq{width:16px;height:16px;border-radius:2px;flex:none;background:var(--st-700);display:flex;align-items:center;
+  justify-content:center;font-family:var(--mono);font-size:9px;color:var(--dfg3)}
+.nav-i.on .sq{background:var(--grn); color:#04150e}
+.tabbar{display:flex; gap:1px; background:var(--st-950); border-bottom:1px solid var(--st-700); overflow-x:auto}
+.tb{display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:11px; letter-spacing:.05em;
+  text-transform:uppercase; background:var(--st-900); border:0; border-right:1px solid var(--st-700); color:var(--dfg3);
+  padding:9px 12px; cursor:pointer; white-space:nowrap}
+.tb.on{background:var(--st-850); color:var(--grn-hi); box-shadow:inset 0 2px 0 var(--grn-hi)}
+.tb i{font-style:normal; color:var(--st-500); font-size:13px}
+.tb i:hover{color:var(--red-hi)}
+.workarea{padding:18px; background:var(--st-900); min-height:396px}
+.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(178px,1fr)); gap:12px}
+.tile{display:flex; flex-direction:column; align-items:center; justify-content:flex-start; text-align:center;
+  font:inherit; cursor:pointer; background:var(--st-850); border:1px solid var(--st-700);
+  border-radius:var(--r2); padding:22px 14px 20px; color:var(--dfg)}
+.tile:hover{border-color:var(--grn-hi)}
+.tile:hover .tile-ic{background:rgba(46,224,143,.14); border-color:var(--grn-hi)}
+.tile-ic{width:62px;height:62px;flex:none;border-radius:8px;border:1px solid var(--st-600);
+  background:var(--st-800); display:flex; align-items:center; justify-content:center;
+  font-family:var(--mono); font-size:19px; letter-spacing:.04em; color:var(--grn-hi); margin-bottom:15px}
+.tile-n{display:block; width:100%; font-size:14.5px; color:#fff; line-height:1.4}
+.steps{list-style:none;padding:0;margin:0}
+/* min-height rezerwuje miejsce, zeby zmiana statusu nie przesuwala kolejnych wierszy */
+.steps li{display:flex; gap:12px; align-items:flex-start; padding:8px 0; min-height:46px;
+  border-bottom:1px solid var(--st-800)}
+.steps li:last-child{border-bottom:0}
+.sic{width:21px;height:21px;min-width:21px;min-height:21px;max-height:21px;flex:none;align-self:flex-start;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0;
+  font-family:var(--mono);font-size:10px;margin-top:2px;background:var(--st-800);color:var(--dfg3);border:1px solid var(--st-600)}
+.sic.work{background:rgba(95,180,255,.14);color:var(--blu-hi);border-color:var(--blu-hi)}
+.sic.done{background:rgba(46,224,143,.14);color:var(--grn-hi);border-color:var(--grn-hi)}
+.sic.err{background:rgba(255,111,111,.14);color:var(--red-hi);border-color:var(--red-hi)}
+.st-t{font-size:13.5px; color:var(--dfg)}
+.st-s{font-family:var(--mono); font-size:10.5px; letter-spacing:.05em; color:var(--dfg3)}
+.bus{display:grid; grid-template-columns:repeat(2,1fr); gap:6px}
+.bx{display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:48px;
+  max-height:48px; padding:6px; border:1px dashed var(--st-600); border-radius:var(--r); text-align:center;
+  font-family:var(--mono); font-size:10.5px; color:var(--dfg3); background:var(--st-850)}
+.bx b{display:block; font-size:12.5px; font-weight:400; color:var(--dfg2); line-height:1.25}
+.bx.work{border:1px solid var(--amb-hi); background:rgba(240,184,63,.1); color:var(--amb-hi)}
+.bx.work b{color:var(--amb-hi)}
+.bx.done{border:1px solid var(--grn-hi); background:rgba(46,224,143,.1); color:var(--grn-hi)}
+.bx.done b{color:var(--grn-hi)}
+.bx.conf{border:1px solid var(--red-hi); background:rgba(255,111,111,.1); color:var(--red-hi)}
+.bx.conf b{color:var(--red-hi)}
+.sw{position:relative; display:inline-flex; align-items:center; gap:9px; cursor:pointer; font-size:13px}
+.sw input{position:absolute; opacity:0; width:0; height:0}
+.sw .tr{width:34px;height:19px;border-radius:10px;background:var(--st-700);border:1px solid var(--st-600);position:relative;transition:.15s;flex:none}
+.sw .tr::after{content:"";position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:var(--dfg3);transition:.15s}
+.sw input:checked + .tr{background:rgba(46,224,143,.28); border-color:var(--grn-hi)}
+.sw input:checked + .tr::after{left:17px; background:var(--grn-hi)}
+
+/* layout demo */
+.lslot{background:var(--st-800); border:1px solid var(--st-700); border-radius:var(--r); padding:8px; cursor:pointer;
+  text-align:center; min-height:56px; display:flex; flex-direction:column; justify-content:center; gap:3px; color:var(--dfg)}
+.lslot:hover{border-color:var(--st-500)}
+.lslot.sel{border-color:var(--grn-hi); box-shadow:inset 0 0 0 1px var(--grn-hi)}
+.lslot.f-lo{background:rgba(255,111,111,.12); border-color:rgba(255,111,111,.55)}
+.lslot.f-mid{background:rgba(240,184,63,.12); border-color:rgba(240,184,63,.55)}
+.lslot.f-hi{background:rgba(46,224,143,.1); border-color:rgba(46,224,143,.5)}
+.lcap{font-family:var(--mono); font-size:9.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--dfg3)}
+.lnm{font-size:12.5px; color:#fff}
+.epa{border:1px dashed var(--amb-hi); border-radius:var(--r2); padding:9px; background:rgba(240,184,63,.045)}
+.ph-epa{color:var(--amb-hi)}
+.chip{display:inline-flex; align-items:center; gap:5px; font-size:12px; background:var(--st-800);
+  border:1px solid var(--st-700); border-radius:2px; padding:3px 4px 3px 9px; margin:0 5px 5px 0; color:var(--dfg2)}
+.chip button{border:0;background:transparent;cursor:pointer;color:var(--dfg3);font:inherit;font-size:13px;padding:0 3px;line-height:1}
+.chip button:hover{color:var(--red-hi)}
+.pool-i{display:flex; align-items:center; justify-content:space-between; gap:8px; font-size:12.5px;
+  border-bottom:1px solid var(--st-800); padding:7px 0}
+.pool-i:last-child{border-bottom:0}
+.pool-i.off{opacity:.5}
+.bucket{display:grid; grid-template-columns:98px 1fr; gap:8px; margin-bottom:6px}
+.bucket-l{font-family:var(--mono); font-size:9.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--dfg3);
+  background:var(--st-800); border-radius:var(--r); padding:8px; display:flex; align-items:center}
+.bucket-b{border:1px solid var(--st-700); border-radius:var(--r); padding:5px 7px; min-height:36px}
+.pie{width:13px;height:13px;border-radius:50%;flex:none;display:inline-block}
+
+/* briefing */
+.gw{text-align:center; padding:4px 0 10px}
+.gv{font-family:var(--mono); font-size:18px; color:#fff}
+.gs{font-family:var(--mono); font-size:10px; letter-spacing:.05em; color:var(--dfg3)}
+.card-s{border:1px solid var(--st-700); border-radius:var(--r); padding:11px 12px; margin-bottom:9px; background:var(--st-800)}
+.card-s .lbl{font-family:var(--mono); font-size:9.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--dfg3)}
+.card-s .txt{font-size:13px; color:var(--dfg); margin-top:2px}
+.st-row{display:flex; align-items:center; justify-content:space-between; gap:8px; border-top:1px solid var(--st-700); margin-top:9px; padding-top:8px}
+
+/* klasyfikator */
+.flow{display:grid; grid-template-columns:repeat(auto-fit,minmax(124px,1fr)); gap:0; margin-bottom:16px;
+  border:1px solid var(--st-700); border-radius:var(--r2); overflow:hidden}
+.fstep{background:var(--st-850); border-right:1px solid var(--st-700); padding:11px 12px; font-size:11.5px; color:var(--dfg3)}
+.fstep:last-child{border-right:0}
+.fstep b{display:block; font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase;
+  font-weight:400; color:var(--dfg2); margin-bottom:3px}
+.fstep.act{background:rgba(46,224,143,.075); color:var(--dfg2)}
+.fstep.act b{color:var(--grn-hi)}
+.fstep.res-rank{background:rgba(46,224,143,.16)}
+.fstep.res-ai{background:rgba(167,156,255,.15)}
+.fstep.res-ai b{color:var(--vio-hi)}
+.fstep.res-none{background:rgba(255,111,111,.13)}
+.fstep.res-none b{color:var(--red-hi)}
+.sc-top td{background:rgba(46,224,143,.06)}
+.sc-bar{height:4px; background:var(--st-800); border-radius:2px; overflow:hidden; margin-top:4px; min-width:54px}
+.sc-bar i{display:block; height:100%; background:var(--grn-hi)}
+.jsonbox{font-family:var(--mono); font-size:11.5px; line-height:1.75; background:var(--st-950);
+  border:1px solid var(--st-700); border-radius:var(--r); padding:12px; overflow-x:auto; white-space:pre; color:var(--dfg2)}
+.jk{color:var(--blu-hi)} .jsv{color:var(--grn-hi)} .jn{color:var(--amb-hi)}
+.teams{border:1px solid var(--st-700); border-radius:var(--r); padding:13px; background:var(--st-800); font-size:12.5px; line-height:1.7}
+.teams .qq{color:#fff}
+.teams .aa{color:var(--dfg2)}
+.gate{border-radius:var(--r); padding:12px 14px; font-size:13px; line-height:1.62; margin:14px 0; border-left:2px solid}
+.gate-rank{background:rgba(46,224,143,.08); color:var(--grn-hi); border-color:var(--grn-hi)}
+.gate-ai{background:rgba(167,156,255,.09); color:var(--vio-hi); border-color:var(--vio-hi)}
+.gate-none{background:rgba(255,111,111,.08); color:var(--red-hi); border-color:var(--red-hi)}
+.gate b{color:#fff; font-weight:500}
+
+/* timeline / tools / contact */
+.tl{list-style:none; padding:0; margin:0; max-width:74ch}
+.tl li{position:relative; padding:0 0 26px 26px; border-left:1px solid var(--cn-200)}
+.tl li:last-child{border-left-color:transparent; padding-bottom:0}
+.tl li::before{content:""; position:absolute; left:-4px; top:8px; width:7px; height:7px; background:var(--cn-300)}
+.tl li.now::before{background:var(--grn)}
+.tl-r{font-size:15px; font-weight:500}
+.tl-d{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink3); margin-top:2px}
+.tl-p{font-size:14.5px; color:var(--ink2); margin-top:7px}
+.tset{display:grid; grid-template-columns:repeat(auto-fit,minmax(212px,1fr)); gap:0; border-top:1px solid var(--cn-200); border-left:1px solid var(--cn-200)}
+.tsc{padding:20px 22px; border-right:1px solid var(--cn-200); border-bottom:1px solid var(--cn-200); background:var(--cn-0)}
+.tsc .h{font-family:var(--mono); font-size:10.5px; letter-spacing:.11em; text-transform:uppercase; color:var(--grn); margin-bottom:11px}
+#kontakt{background:var(--st-950); color:var(--dfg); border-bottom:0}
+#kontakt h2{color:#fff; max-width:26ch}
+#kontakt .eyebrow{color:var(--dfg3)}
+#kontakt .lead{color:var(--dfg2)}
+#kontakt .snum{color:var(--grn-hi)}
+footer{background:var(--st-950); color:var(--st-500); padding:30px 0 46px; font-size:12.5px; border-top:1px solid var(--st-800)}
+footer p+p{margin-top:9px}
+footer .wrap{max-width:1120px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <span class="brand">Wiktor Filipowski <i>/</i> procesy cyfrowe</span>
+  <div class="navlinks">
+    <a href="#how">Metoda</a><a href="#projekty">Projekty</a><a href="#narzedzia">Narzędzia</a>
+    <a href="#doswiadczenie">Ścieżka</a><a href="#kontakt">Kontakt</a>
+  </div>
+</div></nav>
+
+<section id="hero">
+  <div class="hatch" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="hero-meta"><span class="b"></span> Digitalizacja i automatyzacja procesów</p>
+        <h1>Tworzę rozwiązania cyfrowe, <em>które sprawdzają się w praktyce.</em></h1>
+        <p class="hero-lead">
+          Znam środowisko produkcyjne od środka, dlatego projektowane przeze mnie aplikacje nie opierają się
+          wyłącznie na założeniach. Rozwiązują rzeczywiste problemy, porządkują procesy i wspierają codzienną
+          pracę użytkowników.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-p" href="#projekty">Otwórz projekty</a>
+          <a class="btn btn-o" href="#kontakt">Kontakt</a>
+        </div>
+      </div>
+      <aside class="spec">
+        <p class="spec-h"><span>Rejestr rozwiązań</span><span>05</span></p>
+        <a class="spec-r" href="#projekty"><span class="spec-n">01</span>
+          <span><span class="spec-t">Automatyczna klasyfikacja usterek</span>
+          <span class="spec-m">Power Automate · AI Builder</span></span></a>
+        <a class="spec-r" href="#projekty"><span class="spec-n">02</span>
+          <span><span class="spec-t">Cyfrowy system Andon</span>
+          <span class="spec-m">Node.js · czas rzeczywisty</span></span></a>
+        <a class="spec-r" href="#projekty"><span class="spec-n">03</span>
+          <span><span class="spec-t">Konfigurator urządzeń</span>
+          <span class="spec-m">Python · Qt</span></span></a>
+        <a class="spec-r" href="#projekty"><span class="spec-n">04</span>
+          <span><span class="spec-t">Layout · obsada stanowisk</span>
+          <span class="spec-m">Power Apps · matryca umiejętności</span></span></a>
+        <a class="spec-r" href="#projekty"><span class="spec-n">05</span>
+          <span><span class="spec-t">Briefing · przekazanie zmiany</span>
+          <span class="spec-m">Power Apps · Power BI</span></span></a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="how"><div class="wrap">
+  <div class="shead"><span class="snum">01</span><div>
+    <p class="eyebrow">Metoda</p>
+    <h2>Od obserwacji procesu do narzędzia w codziennym użyciu</h2>
+  </div></div>
+  <div class="grid-b">
+    <div class="gb"><p class="gb-n">Analiza <span class="ar">→</span></p><h4>Proces w rzeczywistym przebiegu</h4>
+      <p>Obserwuję rzeczywisty przebieg pracy i identyfikuję miejsca, w których ręczne działania, rozproszone dane i nieformalne ustalenia ograniczają efektywność.</p></div>
+    <div class="gb"><p class="gb-n">Projekt <span class="ar">→</span></p><h4>Osobny ekran dla każdej roli</h4>
+      <p>Brygadzista na hali, technik przy urządzeniu i kierownik analizujący raport potrzebują innych informacji oraz funkcji. Dlatego każdy interfejs projektuję pod konkretną rolę i warunki pracy.</p></div>
+    <div class="gb"><p class="gb-n">Wdrożenie</p><h4>Weryfikuję rozwiązanie w praktyce</h4>
+      <p>Po wdrożeniu analizuję sposób korzystania z narzędzia, zbieram opinie użytkowników i rozwijam je na podstawie rzeczywistych doświadczeń.</p></div>
+  </div>
+</div></section>
+
+<section id="projekty"><div class="wrap">
+  <div class="shead"><span class="snum">02</span><div>
+    <p class="eyebrow">Projekty</p>
+    <h2>Pięć wdrożonych rozwiązań</h2>
+    <p class="lead" style="margin-top:12px">Każdy projekt ma klikalne demo: uproszczoną rekonstrukcję działania na danych fikcyjnych.</p>
+  </div></div>
+
+  <div class="projects">
+
+    <!-- 01 KLASYFIKATOR -->
+    <article class="proj feat">
+      <div class="proj-head">
+        <p class="pmeta"><span class="pidx">01</span><span class="pbar"></span>
+          <span class="proj-date">2026</span><span class="ptype">projekt indywidualny</span><span class="badge">wyróżniony</span></p>
+        <h3>Automatyczna klasyfikacja usterek</h3>
+        <p class="proj-hook">Zgłoszenie z formularza trafia do właściwego komponentu w bazie automatycznie. Ranking punktowy rozstrzyga oczywiste przypadki, model językowy dopiero te niepewne.</p>
+        <ul class="proj-bul">
+          <li>Technik wypełnia formularz zgłoszenia usterki; dalej wszystko dzieje się bez udziału człowieka.</li>
+          <li>Deterministyczny ranking punktuje każdy rekord bazy wiedzy: indeks, nazwa elementu, słowa kluczowe, typowe problemy, typ operacji.</li>
+          <li>Model językowy uruchamia się wyłącznie wtedy, gdy ranking nie daje jednoznacznego wskazania, i wybiera tylko z trzech najlepszych kandydatów.</li>
+        </ul>
+        <div class="proj-more" id="more-cls">
+          <ul class="proj-bul" style="margin-top:0">
+            <li>Prompt zabrania wychodzenia poza listę kandydatów i wymyślania nazw, indeksów oraz stanowisk; ma jawną ścieżkę „brak w bazie”.</li>
+            <li>Wynik zawiera poziom pewności, uzasadnienie oraz znacznik, czy zdecydował ranking, czy model.</li>
+            <li>Rekord ląduje w bazie zgłoszeń razem z zapisaną pewnością klasyfikacji, więc jakość działania da się audytować po czasie.</li>
+            <li>Powiadomienie na czat zespołu w ustalonym formacie, w dwóch wariantach zależnie od typu zgłoszenia.</li>
+          </ul>
+          <p class="proj-res">Klasyfikacja, która wcześniej wymagała ręcznego przeszukania bazy komponentów, wykonuje się natychmiast po wysłaniu formularza. Dwustopniowa konstrukcja (najpierw ranking, potem model) utrzymuje koszt i czas odpowiedzi nisko, a wynik pozostaje powtarzalny i wyjaśnialny. Zapisana pewność pokazuje, gdzie baza wiedzy ma luki.</p>
+        </div>
+        <div class="tags"><span class="tag">Power Automate</span><span class="tag">Forms</span><span class="tag">Excel Online</span><span class="tag">AI Builder</span><span class="tag">Teams</span></div>
+        <div class="proj-acts">
+          <button class="btn btn-p btn-sm" data-demo="cls">Otwórz demo</button>
+          <button class="btn btn-sm" data-more="cls">Pełny opis</button>
+        </div>
+      </div>
+
+      <div class="hmi" id="demo-cls">
+        <div class="hmi-bar">
+          <span class="hmi-t"><span class="led"></span> Demo <b>/ klasyfikacja usterek</b></span>
+          <button class="btn btn-sm" data-close="cls">Zamknij</button>
+        </div>
+        <div class="hmi-body">
+          <p class="note">Wybierz jeden z trzech scenariuszy albo wpisz własny opis. Wagi punktowe i próg odcięcia są takie jak we wdrożeniu; dopasowanie tekstowe jest w demo uproszczone. Nazwy elementów i indeksy są fikcyjne.</p>
+          <div class="panel" style="margin-bottom:16px">
+            <p class="ph">Scenariusze</p>
+            <div class="row" style="margin-bottom:15px">
+              <button class="btn btn-sm" data-cls="0">Trafienie w indeks</button>
+              <button class="btn btn-sm" data-cls="1">Opis nieprecyzyjny</button>
+              <button class="btn btn-sm" data-cls="2">Element poza bazą</button>
+            </div>
+            <div class="g2e" style="gap:12px">
+              <div><p class="ph">Uszkodzony element (z formularza)</p>
+                <input type="text" id="cl-el" style="width:100%" placeholder="np. EL-1042 przewód zasilający J4"></div>
+              <div><p class="ph">Opis usterki</p>
+                <input type="text" id="cl-op" style="width:100%" placeholder="np. brak zasilania po podłączeniu"></div>
+            </div>
+            <div class="row" style="margin-top:13px">
+              <button class="btn btn-p btn-sm" id="cl-run">Uruchom klasyfikację</button>
+              <span class="mini m" id="cl-norm"></span>
+            </div>
+          </div>
+
+          <div class="flow" id="cl-flow">
+            <div class="fstep" id="cf0"><b>1 / Formularz</b>zgłoszenie technika</div>
+            <div class="fstep" id="cf1"><b>2 / Normalizacja</b>małe litery, separatory</div>
+            <div class="fstep" id="cf2"><b>3 / Ranking</b>punktacja bazy wiedzy</div>
+            <div class="fstep" id="cf3"><b>4 / Bramka</b>ranking czy model</div>
+            <div class="fstep" id="cf4"><b>5 / Wynik</b>zapis i powiadomienie</div>
+          </div>
+
+          <div class="panel" style="margin-bottom:16px">
+            <p class="ph">Ranking bazy wiedzy · punktacja składowa</p>
+            <div style="overflow-x:auto"><table>
+              <thead><tr><th>Rekord</th><th class="num">Indeks 65</th><th class="num">Nazwa 65/35</th>
+                <th class="num">Słowa 20</th><th class="num">Problemy 15</th><th class="num">Operacja</th>
+                <th class="num">Projekt 5</th><th class="num">Suma</th></tr></thead>
+              <tbody id="cl-rows"><tr><td colspan="8" class="mini">Uruchom klasyfikację, aby zobaczyć punktację.</td></tr></tbody>
+            </table></div>
+            <p class="mini" style="margin-top:11px">Odcięcie: rekordy poniżej 25 punktów są odrzucane. Do dalszego etapu przechodzą trzy najlepsze. Suma jest ograniczona do 100.</p>
+          </div>
+
+          <div id="cl-gate"></div>
+
+          <div class="g2">
+            <div class="panel">
+              <p class="ph">Wynik klasyfikacji</p>
+              <div class="jsonbox" id="cl-json">brak wyniku</div>
+              <p class="ph" style="margin-top:15px">Wiersz zapisany w bazie zgłoszeń</p>
+              <div style="overflow-x:auto"><table><tbody id="cl-db"><tr><td class="mini">brak</td></tr></tbody></table></div>
+            </div>
+            <div class="panel">
+              <p class="ph">Powiadomienie na czat zespołu</p>
+              <div class="teams" id="cl-teams"><span class="mini">brak</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 02 ANDON -->
+    <article class="proj">
+      <div class="proj-head">
+        <p class="pmeta"><span class="pidx">02</span><span class="pbar"></span>
+          <span class="proj-date">2026</span><span class="ptype">projekt zespołowy</span></p>
+        <h3>Cyfrowy system Andon</h3>
+        <p class="proj-hook">Monitorowanie linii w czasie rzeczywistym, trzy różne interfejsy na jednym wspólnym stanie. Autorska aplikacja, która zastąpiła zewnętrzne oprogramowanie.</p>
+        <ul class="proj-bul">
+          <li>Osobne widoki dla operatora na stanowisku, brygadzisty i ekranu informacyjnego linii: ten sam stan, inna perspektywa.</li>
+          <li>Cykl zamyka się dopiero wtedy, gdy wszystkie stanowiska potwierdzą wykonanie; dashboard pokazuje, kto opóźnia.</li>
+          <li>Wezwanie wsparcia z klasyfikacją przyczyny; kategoria decyduje, kogo wezwać i jakich danych system wymaga.</li>
+        </ul>
+        <div class="proj-more" id="more-andon">
+          <ul class="proj-bul" style="margin-top:0">
+            <li>Czas taktu liczony z celu na zmianę i dostępnego czasu netto; przekroczenie uruchamia licznik przestoju.</li>
+            <li>Przerwy operacyjne wstrzymują czas taktu i przestoju, zamiast liczyć go dalej.</li>
+            <li>Dziennik zdarzeń oraz osobna historia czasów wykonania każdego taktu, z eksportem do arkusza.</li>
+            <li>Planer automatycznego startu zmiany i trwały stan przeżywający restart serwera.</li>
+            <li>Sygnał dźwiękowy wezwania wsparcia na ekranie informacyjnym i w panelu brygadzisty.</li>
+          </ul>
+          <p class="proj-res">Zainicjowałem powstanie systemu i wraz z członkiem zespołu zaprojektowałem, zaprogramowałem i wdrożyłem go od podstaw, wykorzystując narzędzia AI jako wsparcie procesu tworzenia. Podczas wdrożenia nowego projektu rozwiązanie zastąpiło wcześniej używane oprogramowanie zewnętrzne, ograniczając zależność od dostawcy.</p>
+        </div>
+        <div class="tags"><span class="tag">Node.js</span><span class="tag">WebSocket</span><span class="tag">Electron</span><span class="tag">Czas rzeczywisty</span></div>
+        <div class="proj-acts">
+          <button class="btn btn-p btn-sm" data-demo="andon">Otwórz demo</button>
+          <button class="btn btn-sm" data-more="andon">Pełny opis</button>
+        </div>
+      </div>
+
+      <div class="hmi" id="demo-andon">
+        <div class="hmi-bar">
+          <span class="hmi-t"><span class="led"></span> Demo <b id="an-crumb">/ logowanie</b></span>
+          <span class="row">
+            <button class="btn btn-sm" id="an-out" style="display:none">Zmień stanowisko</button>
+            <button class="btn btn-sm" data-close="andon">Zamknij</button>
+          </span>
+        </div>
+        <div class="hmi-body">
+          <p class="note">Wybierz stanowisko lub panel. Hasło nie jest potrzebne. Stan jest wspólny dla wszystkich widoków: potwierdź wykonanie jako operator, a potem przejdź na ekran linii i zobacz to samo z drugiej strony.</p>
+          <div id="an-app"></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 03 KONFIGURATOR -->
+    <article class="proj">
+      <div class="proj-head">
+        <p class="pmeta"><span class="pidx">03</span><span class="pbar"></span>
+          <span class="proj-date">cze 2026 – obecnie</span><span class="ptype">projekt indywidualny</span></p>
+        <h3>Konfigurator urządzeń</h3>
+        <p class="proj-hook">Jedno narzędzie zamiast kilku skryptów: przygotowanie i konfiguracja urządzeń do instalacji terenowych, z powłoką aplikacji, zakładkami i logami sesyjnymi.</p>
+        <ul class="proj-bul">
+          <li>Zastępuje kilka niezależnych narzędzi i skryptów jednym interfejsem, prowadząc przez cały proces konfiguracji.</li>
+          <li>Prowadzi krok po kroku, prezentując postęp i status każdego etapu graficznie, zamiast surowych komunikatów konsoli.</li>
+          <li>Precyzyjna klasyfikacja błędów komunikacji zamiast jednego „brak połączenia”: urządzenie nieosiągalne, przekroczony czas, błędne hasło, brak uprawnień, urządzenie w rozruchu.</li>
+        </ul>
+        <div class="proj-more" id="more-konfig">
+          <ul class="proj-bul" style="margin-top:0">
+            <li>Obsługuje urządzenia sieciowe (rejestratory wideo i routery LTE) oraz moduły sterujące na magistrali przemysłowej.</li>
+            <li>Monitoruje na żywo stan modułów na magistrali i porównuje go z konfiguracją docelową, oznaczając niezgodności kolorami.</li>
+            <li>Operacje serwisowe i diagnostyczne bez znajomości poleceń niskopoziomowych.</li>
+            <li>Włączanie i wyłączanie modułów, dwujęzyczny interfejs, historia działań w logach sesyjnych, zmiana parametrów bez ingerencji w kod.</li>
+            <li>Dystrybuowana jako aplikacja przenośna, gotowa do uruchomienia bez instalacji.</li>
+          </ul>
+          <p class="proj-res">Rozwijana iteracyjnie na podstawie informacji zwrotnych z pracy na rzeczywistym sprzęcie. Proces konfiguracji jest szybszy, bardziej uporządkowany i mniej podatny na błędy, a próg wejścia dla nowych techników wyraźnie niższy, bo cała procedura odbywa się w jednym narzędziu.</p>
+        </div>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Qt / PySide6</span><span class="tag">Komunikacja z urządzeniami</span><span class="tag">Aplikacja przenośna</span></div>
+        <div class="proj-acts">
+          <button class="btn btn-p btn-sm" data-demo="konfig">Otwórz demo</button>
+          <button class="btn btn-sm" data-more="konfig">Pełny opis</button>
+        </div>
+      </div>
+
+      <div class="hmi" id="demo-konfig">
+        <div class="hmi-bar">
+          <span class="hmi-t"><span class="led"></span> Demo <b>/ Konfigurator</b></span>
+          <button class="btn btn-sm" data-close="konfig">Zamknij</button>
+        </div>
+        <div class="hmi-body">
+          <p class="note">Wybierz narzędzie z menu po lewej albo z kafelków na pulpicie. Otwarte narzędzia trafiają na pasek zakładek. W ustawieniach możesz wyłączyć moduł, a zniknie on z pulpitu i z menu, jak w aplikacji.</p>
+          <div id="kf-app"></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 04 LAYOUT -->
+    <article class="proj">
+      <div class="proj-head">
+        <p class="pmeta"><span class="pidx">04</span><span class="pbar"></span>
+          <span class="proj-date">mar – wrz 2026</span><span class="ptype">projekt indywidualny</span></p>
+        <h3>Layout · obsada stanowisk</h3>
+        <p class="proj-hook">Planowanie obsady stanowisk z weryfikacją kwalifikacji, zamiast tablicy magnetycznej i ręcznego sprawdzania uprawnień.</p>
+        <ul class="proj-bul">
+          <li>Odwzorowuje rzeczywiste rozmieszczenie stanowisk na obszarze, wraz ze strefami o szczególnych wymaganiach.</li>
+          <li>Integracja z matrycą umiejętności weryfikuje, czy pracownik spełnia wymagania stanowiska; poziom pokazany jest kolorem.</li>
+          <li>Uwzględnia nieobecności: zwolnienia lekarskie, urlopy, krwiodawstwo, delegacje i szkolenia.</li>
+        </ul>
+        <div class="proj-more" id="more-layout">
+          <ul class="proj-bul" style="margin-top:0">
+            <li>Osobne pozycje dla roli specjalisty, instruktora i brygadzisty obszaru.</li>
+            <li>Sekcja osób szkolonych z przypisaniem do stanowiska, na którym odbywa się szkolenie.</li>
+            <li>Przełączanie między obszarami i transfer pracowników pomiędzy nimi.</li>
+            <li>Licznik osób obecnych na obszarze z podziałem na absencje, delegacje i szkolenia oraz dostęp do historii zmian.</li>
+          </ul>
+          <p class="proj-res">Rozwiązanie zostało dostosowane do potrzeb poszczególnych obszarów i jest wykorzystywane w całej hali produkcyjnej. Osoby odpowiedzialne za organizację pracy szybciej podejmują decyzje dotyczące obsady, szkoleń i dostępności pracowników.</p>
+        </div>
+        <div class="tags"><span class="tag">Power Apps</span><span class="tag">Power Automate</span><span class="tag">Matryca umiejętności</span></div>
+        <div class="proj-acts">
+          <button class="btn btn-p btn-sm" data-demo="layout">Otwórz demo</button>
+          <button class="btn btn-sm" data-more="layout">Pełny opis</button>
+        </div>
+      </div>
+
+      <div class="hmi" id="demo-layout">
+        <div class="hmi-bar">
+          <span class="hmi-t"><span class="led"></span> Demo <b>/ Layout · obsada obszaru</b></span>
+          <button class="btn btn-sm" data-close="layout">Zamknij</button>
+        </div>
+        <div class="hmi-body">
+          <p class="note">Kliknij stanowisko, potem wybierz osobę z listy. Aplikacja porówna jej poziom w matrycy umiejętności z wymaganiem stanowiska. Osoby nieobecne są zablokowane. Wszystkie nazwiska w demo są wygenerowane.</p>
+          <div class="row" style="margin-bottom:14px">
+            <div class="tabs"><button class="tab on" data-area="EL1">Obszar EL1</button><button class="tab" data-area="EL2">Obszar EL2</button></div>
+            <span class="pill pill-n" id="lay-head">Osoby na obszarze: 0</span>
+          </div>
+          <div class="g3">
+            <div class="panel">
+              <p class="phbar">Dostępni pracownicy</p>
+              <div id="lay-pool"></div>
+              <p class="ph" style="margin-top:16px">Matryca umiejętności</p>
+              <div class="legend" style="margin-top:0">
+                <span class="row" style="gap:6px"><span class="pie" style="background:conic-gradient(#ff6f6f 0 50%, #4a2020 50% 100%)"></span> 0–50%</span>
+                <span class="row" style="gap:6px"><span class="pie" style="background:conic-gradient(#f0b83f 0 75%, #4a3a12 75% 100%)"></span> 50–75%</span>
+                <span class="row" style="gap:6px"><span class="pie" style="background:#2ee08f"></span> 75–100%</span>
+                <span class="row" style="gap:6px"><span class="pie" style="background:#5fb4ff"></span> kadra obszaru</span>
+              </div>
+              <div id="lay-msg"></div>
+            </div>
+            <div class="panel">
+              <p class="phbar">Stanowiska i role</p>
+              <p class="ph">Szkoleni</p>
+              <div id="lay-train" style="min-height:34px; border:1px solid var(--st-700); border-radius:var(--r); padding:6px 8px"></div>
+              <div class="row" id="lay-tctl" style="margin:9px 0 15px"></div>
+              <p class="ph">Role obszaru <span style="color:var(--blu-hi)">· tylko kadra</span></p>
+              <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:7px; margin-bottom:15px" id="lay-roles"></div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:start">
+                <div>
+                  <p class="ph">Kompletacja</p><div style="display:grid; gap:7px" id="lay-sup"></div>
+                  <p class="ph" style="margin-top:13px">Podawanie</p><div style="display:grid; gap:7px" id="lay-feed"></div>
+                  <p class="ph" style="margin-top:13px">Kontrola</p><div style="display:grid; gap:7px" id="lay-x1"></div>
+                </div>
+                <div>
+                  <p class="ph ph-epa">Strefa chroniona elektrostatycznie</p>
+                  <div class="epa"><div style="display:grid; gap:7px" id="lay-epa"></div></div>
+                </div>
+              </div>
+            </div>
+            <div class="panel">
+              <p class="phbar">Nieobecności</p>
+              <div class="row" style="margin-bottom:13px">
+                <span class="pill pill-r" id="lay-c-abs">Absencje: 0</span>
+                <span class="pill pill-b" id="lay-c-del">Delegacje: 0</span>
+                <span class="pill pill-a" id="lay-c-szk">Szkolenia: 0</span>
+              </div>
+              <div id="lay-buckets"></div>
+              <p class="mini" style="margin-top:11px">Kliknij ×, aby przywrócić osobę do listy dostępnych.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 05 BRIEFING -->
+    <article class="proj">
+      <div class="proj-head">
+        <p class="pmeta"><span class="pidx">05</span><span class="pbar"></span>
+          <span class="proj-date">2026 – obecnie</span><span class="ptype">w rozwoju</span></p>
+        <h3>Briefing · przekazanie zmiany</h3>
+        <p class="proj-hook">Uporządkowane rozpoczęcie i zakończenie zmiany w dwóch aplikacjach: jedna do wprowadzania danych, druga do ich odczytu i analizy.</p>
+        <ul class="proj-bul">
+          <li>Rejestrowanie celów i rzeczywistych wyników: wolumen, produktywność, wskaźnik FTR.</li>
+          <li>Zdarzenia BHP, problemy operacyjne z opisem wpływu na operacje i statusami prezentowanymi ikonami.</li>
+          <li>Uporządkowane przekazywanie informacji między zmianami wraz z dostępem do historii.</li>
+        </ul>
+        <div class="proj-more" id="more-brief">
+          <ul class="proj-bul" style="margin-top:0">
+            <li>Osobny przepływ dla zakończenia poprzedniej zmiany i rozpoczęcia kolejnej.</li>
+            <li>Wyniki prezentowane wskaźnikami kołowymi z realizacją celu w procentach.</li>
+            <li>Uzupełnianie produktywności per produkt i takt, z liczbą operatorów.</li>
+            <li>Analiza wyników dzięki integracji z raportem Power BI; dostosowanie do procesów poszczególnych obszarów.</li>
+          </ul>
+          <p class="proj-res">Rozwiązanie zastąpiło rozproszone informacje, papierowe zapisy, arkusze Excel oraz ustne przekazywanie części komunikatów. Uporządkowało przebieg briefingów, zwiększyło przejrzystość informacji i zapewniło dostęp do pełnej historii danych. System jest wykorzystywany codziennie i nadal rozwijany na podstawie informacji zwrotnej od użytkowników.</p>
+        </div>
+        <div class="tags"><span class="tag">Power Apps</span><span class="tag">Power Automate</span><span class="tag">Power BI</span></div>
+        <div class="proj-acts">
+          <button class="btn btn-p btn-sm" data-demo="brief">Otwórz demo</button>
+          <button class="btn btn-sm" data-more="brief">Pełny opis</button>
+        </div>
+      </div>
+
+      <div class="hmi" id="demo-brief">
+        <div class="hmi-bar">
+          <span class="hmi-t"><span class="led"></span> Demo <b>/ Briefing · przekazanie zmiany</b></span>
+          <button class="btn btn-sm" data-close="brief">Zamknij</button>
+        </div>
+        <div class="hmi-body">
+          <p class="note">Wprowadź wyniki i dodaj zgłoszenia w widoku brygadzisty, potem przełącz się na podgląd zarządczy. Kliknięcie statusu przy zgłoszeniu przechodzi kolejno: nowe → w toku → zamknięte.</p>
+          <div class="row" style="margin-bottom:14px">
+            <div class="tabs"><button class="tab on" data-bt="in">Wprowadzanie danych</button><button class="tab" data-bt="out">Podgląd zarządczy</button></div>
+            <div class="tabs"><button class="tab on" data-barea="EL1">EL1</button><button class="tab" data-barea="EL2">EL2</button></div>
+            <span class="pill pill-n">08.09.2026 · zmiana I</span>
+          </div>
+          <div id="bf-in" class="g4">
+            <div class="panel"><p class="phbar">Dodaj cel na dziś</p>
+              <p class="ph">Wolumen [szt.]</p><input type="number" id="bf-vol" value="4650" style="width:100%">
+              <p class="ph" style="margin-top:11px">Produktywność [%]</p><input type="number" id="bf-prd" value="96" step="0.1" style="width:100%">
+              <p class="ph" style="margin-top:11px">FTR [%]</p><input type="number" id="bf-ftr" value="95" step="0.1" style="width:100%">
+              <p class="mini m" style="margin-top:12px">Cel: 4800 szt. / 100% / 98%</p></div>
+            <div class="panel"><p class="phbar">Dodaj zdarzenie BHP</p>
+              <textarea id="bf-bhp" rows="3" style="width:100%" placeholder="Wprowadź opis zdarzenia"></textarea>
+              <button class="btn btn-p btn-sm" id="bf-bhp-add" style="margin-top:9px">Dodaj</button>
+              <div id="bf-bhp-l" style="margin-top:13px"></div></div>
+            <div class="panel"><p class="phbar">Dodaj problem</p>
+              <textarea id="bf-pr" rows="2" style="width:100%" placeholder="Wprowadź opis problemu"></textarea>
+              <p class="ph" style="margin-top:10px">Wpływ na operacje</p>
+              <textarea id="bf-pri" rows="2" style="width:100%" placeholder="Opisz, jaki miał wpływ na operacje"></textarea>
+              <button class="btn btn-p btn-sm" id="bf-pr-add" style="margin-top:9px">Dodaj</button>
+              <div id="bf-pr-l" style="margin-top:13px"></div></div>
+            <div class="panel"><p class="phbar">Dodaj uwagę</p>
+              <textarea id="bf-uw" rows="3" style="width:100%" placeholder="Wprowadź opis komunikatu"></textarea>
+              <button class="btn btn-p btn-sm" id="bf-uw-add" style="margin-top:9px">Dodaj</button>
+              <div id="bf-uw-l" style="margin-top:13px"></div></div>
+          </div>
+          <div id="bf-out" style="display:none">
+            <div class="g4">
+              <div class="panel"><p class="phbar">Cel na dzień</p><div id="bf-gauges"></div></div>
+              <div class="panel"><p class="phbar">BHP · zdarzenia</p><div id="bf-o-bhp"></div></div>
+              <div class="panel"><p class="phbar">Problemy · zgłoszenia</p><div id="bf-o-pr"></div></div>
+              <div class="panel"><p class="phbar">Dodatkowe uwagi</p><div id="bf-o-uw"></div>
+                <div style="border-top:1px solid var(--st-700); margin-top:13px; padding-top:12px">
+                  <span class="pill pill-b">Integracja z Power BI</span></div></div>
+            </div>
+            <div class="panel" style="margin-top:16px">
+              <p class="ph">Historia · ostatnie zmiany</p>
+              <div style="overflow-x:auto"><table>
+                <thead><tr><th>Data</th><th>Zmiana</th><th class="num">Wolumen</th><th class="num">Produktywność</th><th class="num">FTR</th><th>Zgłoszenia</th></tr></thead>
+                <tbody>
+                  <tr><td>07.09</td><td>III</td><td class="num">4 720</td><td class="num">98,3%</td><td class="num">97,8%</td><td><span class="pill pill-n">2 zamknięte</span></td></tr>
+                  <tr><td>07.09</td><td>II</td><td class="num">4 810</td><td class="num">100,2%</td><td class="num">98,4%</td><td><span class="pill pill-n">brak</span></td></tr>
+                  <tr><td>07.09</td><td>I</td><td class="num">4 655</td><td class="num">96,9%</td><td class="num">96,1%</td><td><span class="pill pill-a">1 w toku</span></td></tr>
+                  <tr><td>06.09</td><td>III</td><td class="num">4 900</td><td class="num">102,1%</td><td class="num">98,9%</td><td><span class="pill pill-n">1 zamknięte</span></td></tr>
+                </tbody>
+              </table></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</div></section>
+
+<section id="narzedzia"><div class="wrap">
+  <div class="shead"><span class="snum">03</span><div>
+    <p class="eyebrow">Narzędzia</p><h2>Czym pracuję</h2>
+  </div></div>
+  <div class="tset">
+    <div class="tsc"><p class="h">Platforma Microsoft</p><div class="tags" style="margin-top:0">
+      <span class="tag">Power Apps</span><span class="tag">Power Automate</span><span class="tag">Power BI</span>
+      <span class="tag">AI Builder</span><span class="tag">Dataverse</span><span class="tag">Excel Online</span></div></div>
+    <div class="tsc"><p class="h">Aplikacje webowe</p><div class="tags" style="margin-top:0">
+      <span class="tag">JavaScript</span><span class="tag">Node.js</span><span class="tag">WebSocket</span><span class="tag">Electron</span></div></div>
+    <div class="tsc"><p class="h">Aplikacje desktopowe</p><div class="tags" style="margin-top:0">
+      <span class="tag">Python</span><span class="tag">Qt / PySide6</span><span class="tag">Komunikacja z urządzeniami</span></div></div>
+    <div class="tsc"><p class="h">Sposób pracy</p><div class="tags" style="margin-top:0">
+      <span class="tag">Analiza procesu</span><span class="tag">Praca iteracyjna</span><span class="tag">AI jako wsparcie</span></div></div>
+  </div>
+</div></section>
+
+<section id="doswiadczenie"><div class="wrap">
+  <div class="shead"><span class="snum">04</span><div>
+    <p class="eyebrow">Ścieżka</p><h2>Od hali produkcyjnej do projektowania narzędzi</h2>
+  </div></div>
+  <ul class="tl">
+    <li class="now"><p class="tl-r">Digitalizacja procesów</p><p class="tl-d">obecnie</p>
+      <p class="tl-p">Projektowanie i wdrażanie aplikacji wspierających produkcję i serwis. Pięć rozwiązań w codziennym użyciu.</p></li>
+    <li><p class="tl-r">Brygadzista</p><p class="tl-d">wcześniej</p>
+      <p class="tl-p">Organizacja pracy zmiany, obsada stanowisk, przekazywanie informacji między zmianami. Stąd wzięły się pierwsze aplikacje: z problemów, które miałem na własnej zmianie.</p></li>
+    <li><p class="tl-r">Produkcja</p><p class="tl-d">start</p>
+      <p class="tl-p">Praca na stanowiskach produkcyjnych, czyli źródło wiedzy o tym, jak procesy wyglądają w rzeczywistości, a nie w dokumentacji.</p></li>
+  </ul>
+</div></section>
+
+<section id="kontakt"><div class="wrap">
+  <div class="shead"><span class="snum">05</span><div>
+    <p class="eyebrow">Kontakt</p>
+    <h2>Otwarty na rozmowę o rolach w digitalizacji i automatyzacji procesów</h2>
+  </div></div>
+  <div class="hero-cta" style="margin-top:0">
+    <button class="btn btn-p" id="cp-mail" data-mail="wpf.filipowskii@gmail.com"
+      title="Skopiuj adres do schowka"><span id="cp-lbl" class="m">wpf.filipowskii@gmail.com</span></button>
+    <a class="btn btn-o" href="mailto:wpf.filipowskii@gmail.com">Napisz e-mail</a>
+    <a class="btn btn-o" href="https://www.linkedin.com/in/wiktor-filipowski-102a63434/"
+      target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+  <p class="m" id="cp-hint" style="margin-top:15px; color:var(--st-500); font-size:11.5px;
+    letter-spacing:.05em">Kliknij adres, aby skopiować go do schowka.</p>
+</div></section>
+
+<footer><div class="wrap">
+  <p>Wszystkie demo na tej stronie są uproszczonymi rekonstrukcjami zbudowanymi na danych fikcyjnych, na potrzeby prezentacji sposobu działania. Nie zawierają danych, interfejsów ani materiałów należących do pracodawcy.</p>
+  <p>© 2026 Wiktor Filipowski</p>
+</div></footer>
+
+<script>
+(function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+var pad=function(n){return (n<10?'0':'')+n};
+var clock=function(){return new Date().toTimeString().slice(0,8)};
+var mmss=function(s){s=Math.max(0,s); return pad(Math.floor(s/60))+':'+pad(s%60)};
+var INIT={};
+
+$$('[data-more]').forEach(function(b){b.addEventListener('click',function(){
+  var m=$('#more-'+b.dataset.more); if(!m)return;
+  b.textContent=m.classList.toggle('on')?'Zwiń opis':'Pełny opis';
+});});
+$$('[data-demo]').forEach(function(b){b.addEventListener('click',function(){
+  var k=b.dataset.demo,d=$('#demo-'+k); if(!d)return;
+  var on=d.classList.toggle('on');
+  b.textContent=on?'Ukryj demo':'Otwórz demo';
+  if(on){(INIT[k]||function(){})(); d.scrollIntoView({behavior:'smooth',block:'nearest'});}
+});});
+$$('[data-close]').forEach(function(b){b.addEventListener('click',function(){
+  var k=b.dataset.close; $('#demo-'+k).classList.remove('on');
+  var t=$('[data-demo="'+k+'"]'); if(t)t.textContent='Otwórz demo';
+});});
+
+/* =========================================================
+   01 / KLASYFIKATOR USTEREK
+   ========================================================= */
+var KB=[
+ {el:'Przewód zasilający J4', ix:'EL-1042', st:'Y2', op:'podłączenie zasilania', pr:['brak zasilania','luźne złącze'], kw:['j4','pwr','zasilanie','przewód']},
+ {el:'Wiązka sygnałowa J6', ix:'EL-1078', st:'Y3', op:'podłączenie sygnału', pr:['brak komunikacji','zamieniona wiązka'], kw:['j6','wiązka','sygnał','przewód']},
+ {el:'Moduł sterujący ALC', ix:'EL-2210', st:'Y1', op:'montaż ALC, programowanie', pr:['błąd programowania','moduł nie odpowiada'], kw:['alc','moduł','sterownik']},
+ {el:'Kostka przyłączeniowa 1F1', ix:'EL-3305', st:'Y2', op:'podłączenie przewodu', pr:['poluzowany zacisk'], kw:['1f1','kostka','zacisk']},
+ {el:'Osłona górna', ix:'OS-0071', st:'Y4', op:'montaż osłony', pr:['pęknięcie','brak mocowania'], kw:['osłona','pokrywa']},
+ {el:'Prowadnica liniowa', ix:'ME-0450', st:'Y0', op:'montaż mechaniczny', pr:['zatarcie','luz osiowy'], kw:['prowadnica','łożysko']}
+];
+var CLS_SC=[
+ {el:'EL-1042 przewód zasilający J4', op:'brak zasilania po podłączeniu'},
+ {el:'przewód J6', op:'zamieniona wiązka, brak komunikacji'},
+ {el:'czujnik zbliżeniowy XZ-9', op:'nie wykrywa detalu na wejściu'}
+];
+function norm(s){return String(s||'').toLowerCase().trim().replace(/[-\/]/g,' ').replace(/\s+/g,' ')}
+function scoreRow(r,ec,on){
+  var indexS = ec.indexOf(norm(r.ix))>=0 ? 65 : 0;
+  var en=norm(r.el), elS=0;
+  if(en===ec) elS=65;
+  else if((ec.length>2 && en.indexOf(ec)>=0)||(en.length>2 && ec.indexOf(en)>=0)) elS=35;
+  var kwS = r.kw.some(function(k){return ec.indexOf(k)>=0}) ? 20 : 0;
+  var prS = r.pr.some(function(p){return on.indexOf(p)>=0 ||
+    p.split(' ').every(function(t){return t.length>3 && on.indexOf(t)>=0})}) ? 15 : 0;
+  var opn=norm(r.op), opS=0;
+  if(on.indexOf('alc')>=0 && opn.indexOf('alc')>=0) opS+=10;
+  if(on.indexOf('zasil')>=0 && opn.indexOf('zasil')>=0) opS+=8;
+  if(on.indexOf('podłącz')>=0 && opn.indexOf('podłącz')>=0) opS+=7;
+  if(/przewod|przewód|wiązk|wiaz|kostk/.test(on) && /przewod|przewód|wiązk|wiaz|kostk/.test(opn)) opS+=5;
+  var pjS=5;
+  return {r:r,indexS:indexS,elS:elS,kwS:kwS,prS:prS,opS:opS,pjS:pjS,
+    sum:Math.min(100,indexS+elS+kwS+prS+opS+pjS)};
+}
+function clsFlow(kind){
+  for(var i=0;i<5;i++){var e=$('#cf'+i); if(e)e.className='fstep act'}
+  var lbl={rank:'ranking wystarczył',ai:'decyzja modelu',none:'brak kandydatów'}[kind]||'ranking czy model';
+  var g=$('#cf3');
+  if(g){g.className='fstep act'+(kind?' res-'+kind:''); g.innerHTML='<b>4 / Bramka</b>'+lbl}
+}
+function clsRun(){
+  var elRaw=$('#cl-el').value, opRaw=$('#cl-op').value;
+  if(!elRaw.trim() && !opRaw.trim()){$('#cl-norm').textContent='Wpisz element lub opis, albo wybierz scenariusz.'; return}
+  var ec=norm(elRaw), on=norm(opRaw);
+  $('#cl-norm').textContent='po normalizacji: „'+ec+'” / „'+on+'”';
+  var scored=KB.map(function(r){return scoreRow(r,ec,on)}).sort(function(a,b){return b.sum-a.sum});
+  var pass=scored.filter(function(s){return s.sum>=25}).slice(0,3);
+  clsFlow(!pass.length?'none':(pass[0].sum>=100?'rank':'ai'));
+  $('#cl-rows').innerHTML=scored.map(function(s){
+    var top=pass.indexOf(s)>=0, z=function(v){return v?v:'<span style="color:var(--st-500)">0</span>'};
+    return '<tr class="'+(top?'sc-top':'')+'" style="'+(top?'':'opacity:.45')+'">'+
+      '<td><span style="color:#fff">'+esc(s.r.el)+'</span><br><span class="mini m">'+esc(s.r.ix)+' · '+esc(s.r.st)+'</span></td>'+
+      '<td class="num">'+z(s.indexS)+'</td><td class="num">'+z(s.elS)+'</td><td class="num">'+z(s.kwS)+'</td>'+
+      '<td class="num">'+z(s.prS)+'</td><td class="num">'+z(s.opS)+'</td><td class="num">'+s.pjS+'</td>'+
+      '<td class="num"><span style="color:#fff">'+s.sum+'</span><div class="sc-bar"><i style="width:'+s.sum+'%"></i></div></td></tr>';
+  }).join('');
+
+  var t1=pass.length?pass[0]:null, res, gate;
+  if(!t1){
+    gate='<div class="gate gate-none"><b>Ranking nie zwrócił kandydatów.</b> Żaden rekord nie przekroczył progu 25 punktów. '+
+      'Przepływ wchodzi na ścieżkę awaryjną i zwraca jawne „brak w bazie” zamiast dopasowania na siłę. Element trzeba dopisać do bazy wiedzy.</div>';
+    res={NK:'brak w bazie',S:'KOMPONENT',I:'',TO:'',P:0,U:'Brak kandydatów po rankingu.',TK:'Fallback'};
+  } else if(t1.sum>=100){
+    gate='<div class="gate gate-rank"><b>Ranking rozstrzygnął sam, model się nie uruchamia.</b> Najlepszy kandydat ma 100 punktów, '+
+      'czyli dokładne trafienie. Wynik idzie prosto do zapisu: zero kosztu wywołania modelu, zero niepewności, wynik w pełni powtarzalny.</div>';
+    res={NK:t1.r.el,S:t1.r.st,I:t1.r.ix,TO:t1.r.op,P:100,U:'Jednoznaczne dopasowanie w bazie wiedzy.',TK:'Ranking'};
+  } else {
+    gate='<div class="gate gate-ai"><b>Ranking niepewny, uruchamia się model językowy.</b> Najlepszy kandydat ma '+t1.sum+
+      ' z 100 punktów, więc decyzja idzie do modelu. Dostaje wyłącznie '+pass.length+' wyfiltrowane rekordy wraz z rozbiciem punktacji '+
+      'i zakaz wychodzenia poza tę listę. Nie zgaduje na surowym tekście, tylko wybiera jeden z podanych i uzasadnia wybór.</div>';
+    res={NK:t1.r.el,S:t1.r.st,I:t1.r.ix,TO:t1.r.op,P:Math.min(95,55+Math.round(t1.sum*0.6)),
+      U:'Wybrano na podstawie zgodności oznaczenia i opisu usterki.',TK:'AI'};
+  }
+  $('#cl-gate').innerHTML=gate;
+  $('#cl-json').innerHTML='{\n'+
+    '  <span class="jk">"element"</span>:      <span class="jsv">"'+esc(res.NK)+'"</span>,\n'+
+    '  <span class="jk">"stanowisko"</span>:   <span class="jsv">"'+esc(res.S)+'"</span>,\n'+
+    '  <span class="jk">"indeks"</span>:       <span class="jsv">"'+esc(res.I)+'"</span>,\n'+
+    '  <span class="jk">"operacja"</span>:     <span class="jsv">"'+esc(res.TO)+'"</span>,\n'+
+    '  <span class="jk">"pewnosc"</span>:      <span class="jn">'+res.P+'</span>,\n'+
+    '  <span class="jk">"uzasadnienie"</span>: <span class="jsv">"'+esc(res.U)+'"</span>,\n'+
+    '  <span class="jk">"zrodlo"</span>:       <span class="jsv">"'+esc(res.TK)+'"</span>\n}';
+  var pc=res.P>=100?'pill-g':(res.P>=70?'pill-a':'pill-r');
+  $('#cl-db').innerHTML=
+    '<tr><th style="width:44%">Nazwa elementu</th><td>'+esc(res.NK)+'</td></tr>'+
+    '<tr><th>Indeks</th><td class="m">'+(res.I?esc(res.I):'brak')+'</td></tr>'+
+    '<tr><th>Stanowisko</th><td class="m">'+esc(res.S)+'</td></tr>'+
+    '<tr><th>Opis uszkodzenia</th><td>'+(opRaw?esc(opRaw):'brak')+'</td></tr>'+
+    '<tr><th>Pewność klasyfikacji</th><td><span class="pill '+pc+'">'+res.P+'%</span></td></tr>'+
+    '<tr><th>Źródło decyzji</th><td><span class="pill '+(res.TK==='Ranking'?'pill-g':(res.TK==='AI'?'pill-v':'pill-r'))+'">'+esc(res.TK)+'</span></td></tr>';
+  $('#cl-teams').innerHTML=
+    '<p class="qq">Data</p><p class="aa">08.09.2026</p>'+
+    '<p class="qq" style="margin-top:9px">1. Jaki element uległ uszkodzeniu?</p><p class="aa">'+esc(res.NK)+'</p>'+
+    '<p class="qq" style="margin-top:9px">2. Na czym polegała usterka?</p><p class="aa">'+(opRaw?esc(opRaw):'brak')+'</p>'+
+    '<p class="qq" style="margin-top:9px">3. Indeks</p><p class="aa">'+(res.I?esc(res.I):'brak, element nierozpoznany')+'</p>'+
+    '<p class="qq" style="margin-top:9px">4. Pewność klasyfikacji</p><p class="aa">'+res.P+'% ('+esc(res.TK)+')</p>';
+}
+$$('[data-cls]').forEach(function(b){b.addEventListener('click',function(){
+  var s=CLS_SC[+b.dataset.cls]; $('#cl-el').value=s.el; $('#cl-op').value=s.op; clsRun();
+});});
+$('#cl-run').addEventListener('click',clsRun);
+INIT.cls=function(){if(INIT.cls.d)return; INIT.cls.d=1;
+  $('#cl-el').value=CLS_SC[0].el; $('#cl-op').value=CLS_SC[0].op; clsRun();};
+
+/* =========================================================
+   02 / ANDON (logowanie + trzy widoki, wspólny stan)
+   ========================================================= */
+var AST=['Y0','Y1','Y2','Y3','Y4'];
+var ACATS=[
+ {k:'mat',n:'Brak materiału',to:'Logistyka wewnętrzna',need:true,ic:'M',c:'var(--amb-hi)',bg:'rgba(240,184,63,.14)'},
+ {k:'awa',n:'Awaria maszyny',to:'Utrzymanie ruchu',need:false,ic:'A',c:'var(--red-hi)',bg:'rgba(255,111,111,.14)'},
+ {k:'wad',n:'Wada materiału',to:'Kontrola jakości',need:false,ic:'W',c:'var(--red-hi)',bg:'rgba(255,111,111,.14)'},
+ {k:'inn',n:'Inne / brygadzista',to:'Brygadzista obszaru',need:false,ic:'I',c:'var(--dfg2)',bg:'var(--st-700)'}
+];
+var AN={view:null,goal:15,net:420,takt:1680,left:1680,count:0,run:false,down:0,isDown:false,
+        brk:false,logs:[],cyc:[],cycStart:0,st:{},catOpen:false,cat:null,comment:'',logTab:'log'};
+AST.forEach(function(s){AN.st[s]={r:false,sup:false,reason:null}});
+function anLog(k,m,d){AN.logs.unshift({t:clock(),k:k,m:m,d:d||''}); if(AN.logs.length>40)AN.logs.pop()}
+function anLogHtml(){
+  if(AN.logTab==='cyc'){
+    return AN.cyc.length? AN.cyc.map(function(c){
+      return '<div><span class="t">'+c.ts+'</span> '+c.s+' / takt '+c.t+' / <span class="w">'+c.m+'</span></div>'}).join('')
+      : '<div class="t">Brak zamkniętych taktów.</div>';
+  }
+  return AN.logs.length? AN.logs.map(function(l){
+    return '<div><span class="t">'+l.t+'</span> <span class="'+l.k+'">'+esc(l.m)+'</span>'+
+      (l.d?' <span class="t">'+esc(l.d)+'</span>':'')+'</div>'}).join('')
+    : '<div class="t">Dziennik pusty.</div>';
+}
+function anStatus(){
+  if(!AN.run)return['Oczekiwanie','pill-n'];
+  if(AN.brk)return['Przerwa','pill-b'];
+  if(AN.isDown)return['Przestój','pill-r'];
+  if(AST.some(function(s){return AN.st[s].sup}))return['Wezwanie','pill-a'];
+  return['Praca','pill-g'];
+}
+function anKpis(){
+  var s=anStatus();
+  return '<div class="kpis">'+
+    '<div class="kpi"><p class="kpi-l">Status linii</p><p class="kpi-v" style="font-size:15px;padding-top:4px">'+
+      '<span class="pill '+s[1]+'">'+s[0]+'</span></p></div>'+
+    '<div class="kpi"><p class="kpi-l">Czas taktu</p><p class="kpi-v">'+mmss(AN.left)+'</p></div>'+
+    '<div class="kpi"><p class="kpi-l">Realizacja</p><p class="kpi-v">'+AN.count+'/'+AN.goal+'</p></div>'+
+    '<div class="kpi"><p class="kpi-l">Przestój</p><p class="kpi-v">'+mmss(AN.down)+'</p></div>'+
+    '<div class="kpi"><p class="kpi-l">Zegar</p><p class="kpi-v">'+clock().slice(0,5)+'</p></div></div>';
+}
+function anGrid(selectable){
+  return '<div class="tvgrid">'+AST.map(function(s){
+    var st=AN.st[s], cls='tvc', sub='W toku';
+    if(st.sup){cls+=' warn'; sub=st.reason}
+    else if(AN.isDown&&!st.r){cls+=' err'; sub='Opóźnienie'}
+    else if(st.r){cls+=' ok'; sub='Zrobione'}
+    if(AN.view===s.toLowerCase())cls+=' sel';
+    return '<div class="'+cls+'"'+(selectable?' data-a="go:'+s.toLowerCase()+'"':'')+'>'+
+      '<div class="tvc-h">'+s+'</div><div class="tvc-s">'+esc(sub)+'</div></div>';
+  }).join('')+'</div>';
+}
+function anCatPanel(){
+  if(!AN.catOpen)return'';
+  var h='<div style="border-top:1px solid var(--st-700); margin-top:16px; padding-top:15px">'+
+    '<p class="ph">Potrzebuję wsparcia z powodu</p><div class="cat">'+
+    ACATS.map(function(c){
+      return '<button type="button" class="cat-b'+(AN.cat&&AN.cat.k===c.k?' on':'')+'" data-a="cat:'+c.k+'">'+
+        '<span class="cat-ic" style="background:'+c.bg+';color:'+c.c+'">'+c.ic+'</span>'+
+        '<span><span style="display:block;color:#fff">'+esc(c.n)+'</span>'+
+        '<span class="mini m">'+esc(c.to)+'</span></span></button>';
+    }).join('')+'</div>';
+  if(AN.cat&&AN.cat.need){
+    h+='<div style="margin-top:13px"><p class="ph">Opisz, jakiego materiału brakuje</p>'+
+      '<textarea id="an-ctext" rows="2" style="width:100%" placeholder="np. brak wiązki sygnałowej J6, zostały 2 sztuki">'+esc(AN.comment)+'</textarea>'+
+      '<div class="row" style="margin-top:9px"><button class="btn btn-p btn-sm" data-a="send">Wyślij zgłoszenie</button>'+
+      '<span class="mini" style="color:var(--red-hi)" id="an-cerr"></span></div>'+
+      '<p class="mini" style="margin-top:8px">Ta kategoria jako jedyna wymaga opisu, bo bez niego zgłoszenie nie mówi, czego przynieść.</p></div>';
+  }
+  return h+'</div>';
+}
+function anRender(){
+  var app=$('#an-app'), crumb=$('#an-crumb'), out=$('#an-out');
+  if(!AN.view){
+    crumb.textContent='/ logowanie'; out.style.display='none';
+    app.innerHTML='<div class="login"><div class="login-h">'+
+      '<p class="login-mark"><span class="led"></span> Andon System</p>'+
+      '<h4>Wybór stanowiska</h4><p class="mini" style="margin-top:5px">Tryb demonstracyjny, logowanie bez hasła.</p></div>'+
+      AST.map(function(s,i){
+        return '<button class="opt" data-a="go:'+s.toLowerCase()+'"><span class="opt-ic">'+s+'</span>'+
+          '<span><span class="opt-t">Stanowisko '+s+'</span><br><span class="opt-s">operator · linia Y</span></span></button>';
+      }).join('')+
+      '<button class="opt" data-a="go:admin"><span class="opt-ic" style="background:rgba(46,224,143,.15);color:var(--grn-hi)">BR</span>'+
+        '<span><span class="opt-t">Panel brygadzisty</span><br><span class="opt-s">zarządzanie linią</span></span></button>'+
+      '<button class="opt" data-a="go:tv"><span class="opt-ic" style="background:rgba(95,180,255,.15);color:var(--blu-hi)">TV</span>'+
+        '<span><span class="opt-t">Ekran informacyjny linii</span><br><span class="opt-s">dashboard</span></span></button></div>';
+    return;
+  }
+  out.style.display='';
+  if(AST.indexOf(AN.view.toUpperCase())>=0){
+    var id=AN.view.toUpperCase(), s=AN.st[id];
+    crumb.textContent='/ operator '+id;
+    var okLbl,okSub,okDis=false;
+    if(!AN.run){okLbl='ZMIANA ZATRZYMANA'; okSub='poczekaj na rozpoczęcie zmiany'; okDis=true}
+    else if(AN.brk){okLbl='PRZERWA'; okSub='czas taktu jest wstrzymany'; okDis=true}
+    else if(s.r){okLbl='OCZEKIWANIE…'; okSub='czekamy na pozostałe stanowiska'; okDis=true}
+    else {okLbl='POTWIERDŹ OK'; okSub='zakończ cykl jako prawidłowy'}
+    app.innerHTML='<div class="g2"><div class="panel">'+
+      '<p class="phbar">Stanowisko '+id+' · operator</p>'+anKpis()+
+      '<div style="margin-top:15px"><button class="bigbtn" data-a="ok"'+(okDis?' disabled':'')+'>'+okLbl+
+        '<small>'+okSub+'</small></button>'+
+      '<button class="bigbtn sub'+(s.sup?' act':'')+'" data-a="sup" style="margin-top:9px">'+
+        (s.sup?'ANULUJ WSPARCIE':'WEZWIJ WSPARCIE')+
+        '<small>'+(s.sup?'zgłoszono: '+esc(s.reason):'zgłoś przyczynę zatrzymania')+'</small></button></div>'+
+      anCatPanel()+
+      '<p class="mini" style="margin-top:14px">Przejdź na ekran informacyjny linii, aby zobaczyć ten sam stan z perspektywy całej zmiany.</p>'+
+      '</div><div class="panel"><p class="phbar">Stan linii</p>'+anGrid(false)+
+      '<p class="ph" style="margin-top:15px">Dziennik zdarzeń</p><div class="log">'+anLogHtml()+'</div></div></div>';
+  } else if(AN.view==='admin'){
+    crumb.textContent='/ panel brygadzisty';
+    app.innerHTML='<div class="g2"><div class="panel">'+
+      '<p class="phbar">Zarządzanie linią</p>'+anKpis()+
+      '<div style="margin-top:15px"><p class="ph">Cel produkcyjny na zmianę [szt.]</p>'+
+      '<input type="number" id="an-goal" value="'+AN.goal+'" min="1" max="60" style="width:110px">'+
+      '<p class="ph" style="margin-top:11px">Dostępny czas pracy netto [min]</p>'+
+      '<input type="number" id="an-net" value="'+AN.net+'" min="10" max="900" style="width:110px">'+
+      '<p class="mini" style="margin-top:8px">Czas taktu jest wyliczany z tych dwóch wartości, nie wpisywany ręcznie.</p>'+
+      '<div class="row" style="margin-top:12px"><button class="btn btn-p btn-sm" data-a="calc">Przelicz i zapisz</button>'+
+      '<span class="pill pill-n">takt '+Math.round(AN.takt/60)+' min</span></div></div>'+
+      '<div style="border-top:1px solid var(--st-700); margin-top:16px; padding-top:15px">'+
+      '<p class="ph">Czas pracy zmiany</p><div class="row">'+
+      '<button class="btn '+(AN.run?'':'btn-p')+' btn-sm" data-a="shift">'+(AN.run?'Stop zmiany':'Start zmiany')+'</button>'+
+      '<button class="btn btn-sm" data-a="brk">'+(AN.brk?'Koniec przerwy':'Przerwa operacyjna')+'</button>'+
+      '<span class="pill '+anStatus()[1]+'">'+anStatus()[0]+'</span></div></div></div>'+
+      '<div class="panel"><p class="phbar">Stanowiska</p>'+anGrid(true)+
+      '<p class="mini" style="margin-top:10px">Kliknij stanowisko, aby wejść w jego widok operatora.</p>'+
+      '<p class="ph" style="margin-top:15px">Routing zgłoszeń wsparcia</p><table><tbody>'+
+      ACATS.map(function(c){return '<tr><td><span class="row" style="gap:8px">'+
+        '<span class="cat-ic" style="width:19px;height:19px;font-size:10px;background:'+c.bg+';color:'+c.c+'">'+c.ic+'</span>'+
+        esc(c.n)+'</span></td><td>'+esc(c.to)+'</td><td>'+
+        (c.need?'<span class="pill pill-a">opis wymagany</span>':'<span class="pill pill-n">bez opisu</span>')+'</td></tr>'}).join('')+
+      '</tbody></table></div></div>';
+  } else {
+    crumb.textContent='/ ekran informacyjny linii';
+    app.innerHTML='<div class="panel" style="margin-bottom:16px"><p class="phbar">Dashboard linii Y · zmiana I</p>'+
+      anKpis()+'<div style="margin-top:15px">'+anGrid(true)+'</div>'+
+      '<p class="mini" style="margin-top:10px">Kliknij stanowisko, aby wejść w jego widok operatora.</p></div>'+
+      '<div class="panel"><div class="row" style="margin-bottom:12px">'+
+      '<div class="tabs"><button class="tab'+(AN.logTab==='log'?' on':'')+'" data-a="ltab:log">Dziennik zdarzeń</button>'+
+      '<button class="tab'+(AN.logTab==='cyc'?' on':'')+'" data-a="ltab:cyc">Czasy wykonania</button></div></div>'+
+      '<div class="log" style="height:250px">'+anLogHtml()+'</div></div>';
+  }
+}
+function anConfirm(){
+  var id=AN.view.toUpperCase(), s=AN.st[id];
+  if(!AN.run||AN.brk||s.r)return;
+  s.r=true;
+  var el=Math.floor((Date.now()-AN.cycStart)/1000);
+  AN.cyc.unshift({s:id,t:AN.count+1,m:Math.floor(el/60)+'m '+(el%60)+'s',ts:clock()});
+  if(AN.cyc.length>60)AN.cyc.pop();
+  anLog('','Potwierdzenie '+id,'takt '+(AN.count+1));
+  if(AST.every(function(x){return AN.st[x].r})){
+    AN.count++; AN.left=AN.takt; AN.isDown=false; AN.cycStart=Date.now();
+    AST.forEach(function(x){AN.st[x].r=false});
+    anLog('s','Cykl zamknięty','wykonano '+AN.count+'/'+AN.goal);
+    if(AN.count>=AN.goal){AN.run=false; anLog('s','Cel zmiany osiągnięty','' )}
+  }
+  anRender();
+}
+$('#an-app').addEventListener('input',function(e){
+  if(e.target.id==='an-ctext')AN.comment=e.target.value;
+  if(e.target.id==='an-goal')AN.goal=Math.max(1,+e.target.value||1);
+  if(e.target.id==='an-net')AN.net=Math.max(10,+e.target.value||10);
+});
+$('#an-app').addEventListener('click',function(e){
+  var t=e.target.closest('[data-a]'); if(!t)return;
+  var p=t.dataset.a.split(':'), a=p[0], v=p[1];
+  if(a==='go'){AN.view=v; AN.catOpen=false; AN.cat=null; anRender(); return}
+  if(a==='ok'){anConfirm(); return}
+  if(a==='sup'){
+    var id=AN.view.toUpperCase(), s=AN.st[id];
+    if(s.sup){s.sup=false; s.reason=null; AN.catOpen=false; AN.cat=null;
+      anLog('','Anulowano wezwanie '+id,'wsparcie nie jest już wymagane');}
+    else {AN.catOpen=!AN.catOpen; AN.cat=null; AN.comment=''}
+    anRender(); return;
+  }
+  if(a==='cat'){
+    var c=ACATS.filter(function(x){return x.k===v})[0];
+    AN.cat=c;
+    if(c.need){anRender(); var ta=$('#an-ctext'); if(ta)ta.focus();}
+    else anSend(c,'');
+    return;
+  }
+  if(a==='send'){
+    if(!AN.comment.trim()){
+      anRender();
+      var er=$('#an-cerr'); if(er)er.textContent='Wpisz opis, bo bez niego zgłoszenie jest bezużyteczne.';
+      return;
+    }
+    anSend(AN.cat,AN.comment.trim()); return;
+  }
+  if(a==='shift'){
+    AN.run=!AN.run;
+    if(AN.run){AN.count=0; AN.down=0; AN.isDown=false; AN.left=AN.takt; AN.cycStart=Date.now(); AN.cyc=[];
+      AST.forEach(function(x){AN.st[x]={r:false,sup:false,reason:null}});
+      anLog('s','Zmiana rozpoczęta','cel '+AN.goal+' szt., takt '+Math.round(AN.takt/60)+' min');}
+    else anLog('w','Zmiana zatrzymana','wykonano '+AN.count+'/'+AN.goal);
+    anRender(); return;
+  }
+  if(a==='brk'){AN.brk=!AN.brk;
+    anLog(AN.brk?'w':'s',AN.brk?'Przerwa rozpoczęta':'Przerwa zakończona','czas taktu wstrzymany');
+    anRender(); return;}
+  if(a==='calc'){
+    AN.takt=Math.max(1,Math.floor(AN.net/AN.goal))*60; AN.left=AN.takt;
+    anLog('','Brygadzista ustawił cel '+AN.goal+' szt.','czas netto '+AN.net+' min → takt '+Math.floor(AN.net/AN.goal)+' min');
+    anRender(); return;}
+  if(a==='ltab'){AN.logTab=v; anRender(); return}
+});
+function anSend(c,comment){
+  var id=AN.view.toUpperCase();
+  AN.st[id].sup=true; AN.st[id].reason=c.n;
+  anLog('e','Wezwanie '+id,'powód: '+c.n+' → '+c.to+(comment?' | '+comment:''));
+  AN.catOpen=false; AN.cat=null; AN.comment='';
+  anRender();
+}
+$('#an-out').addEventListener('click',function(){AN.view=null; AN.catOpen=false; anRender()});
+INIT.andon=function(){
+  if(INIT.andon.d)return; INIT.andon.d=1;
+  anLog('s','System uruchomiony','linia Y, tryb demonstracyjny');
+  anRender();
+  setInterval(function(){
+    if(!AN.run||AN.brk)return;
+    if(AST.some(function(s){return AN.st[s].sup}))return;
+    AN.left--;
+    if(AN.left<=0&&!AN.isDown){AN.isDown=true; anLog('e','Czas taktu przekroczony','')}
+    if(AN.isDown)AN.down++;
+    if(!$('#demo-andon').classList.contains('on'))return;
+    anRender();
+  },1000);
+};
+
+/* =========================================================
+   03 / KONFIGURATOR (powłoka: menu, zakładki, pulpit)
+   ========================================================= */
+var KTOOLS=[
+ {k:'nvr',n:'Rejestrator wideo',ic:'RV',d:'Aktywacja, adresacja, strumienie i wykrycie kamer.'},
+ {k:'lte',n:'Router LTE',ic:'LTE',d:'Hasło fabryczne, oprogramowanie, konfiguracja docelowa.'},
+ {k:'bus',n:'Moduły magistrali',ic:'MB',d:'Programowanie modułów i porównanie z konfiguracją.'},
+ {k:'prn',n:'Skanuj i drukuj',ic:'PR',d:'Skan numeru i wydruk etykiety na drukarce etykiet.'}
+];
+var KRUNS={
+ nvr:{steps:['Aktywacja urządzenia','Adresacja i port','Czas i synchronizacja','Konfiguracja nagrywania','Wykrycie kamer','Weryfikacja końcowa'],
+  log:['Nawiązywanie połączenia z urządzeniem…','Urządzenie odpowiada, wysyłanie danych aktywacji','Aktywacja zakończona',
+       'Zmiana adresu na docelowy','Ustawianie portu usługi','Synchronizacja czasu z serwerem',
+       'Konfiguracja strumieni nagrywania','Wykryto kamerę 1: online','Wykryto kamerę 2: online',
+       'Weryfikacja panelu urządzenia','Konfiguracja zakończona pomyślnie']},
+ lte:{steps:['Oczekiwanie na urządzenie','Zmiana hasła fabrycznego','Wysłanie oprogramowania','Instalacja i restart','Wysłanie konfiguracji','Weryfikacja panelu'],
+  log:['Oczekiwanie na odpowiedź urządzenia…','Urządzenie odpowiada','Weryfikacja hasła fabrycznego',
+       'Hasło zmienione poprawnie','Przesyłanie pliku oprogramowania','Instalacja w toku, urządzenie zrestartuje się',
+       'Urządzenie wróciło do sieci','Przesyłanie konfiguracji docelowej','Konfiguracja wgrana',
+       'Panel odpowiada pod adresem docelowym','Konfiguracja zakończona pomyślnie']},
+ bus:{steps:['Połączenie z magistralą','Wczytanie konfiguracji docelowej','Programowanie modułów','Skanowanie magistrali','Porównanie z konfiguracją','Raport końcowy'],
+  log:['Otwieranie portu komunikacyjnego…','Port otwarty, magistrala odpowiada','Wczytano konfigurację docelową: 12 modułów',
+       'Programowanie modułu 1/12…','Programowanie modułu 5/12…','Programowanie modułu 9/12…','Programowanie zakończone',
+       'Skanowanie magistrali','Wykryto 12 modułów','Porównanie z konfiguracją docelową',
+       'Porównanie zakończone']}
+};
+/* Lista sytuacji do symulacji. Wpisy z polem code to bledy komunikacji i maja
+   swoja klase; wpis mismatch to nie blad, a wynik porownania z konfiguracja
+   docelowa, dlatego dotyczy tylko magistrali (pole only). */
+var KERRS=[
+ {k:'',n:'przebieg bez zakłóceń'},
+ {k:'mismatch',n:'Niezgodność modułów z konfiguracją',only:'bus'},
+ {k:'unreach',n:'Urządzenie nieosiągalne',at:0,msg:'Urządzenie nie odpowiada na adresie docelowym. Sprawdź kabel i adres karty sieciowej.',code:'kod transportu 7'},
+ {k:'timeout',n:'Przekroczony czas odpowiedzi',at:1,msg:'Urządzenie odpowiadało, ale przerwało transmisję. Operacja przekroczyła limit czasu.',code:'kod transportu 28'},
+ {k:'auth',n:'Błędne hasło',at:1,msg:'Urządzenie odrzuciło dane logowania. Sprawdź hasło fabryczne na naklejce.',code:'HTTP 401'},
+ {k:'perm',n:'Brak uprawnień',at:2,msg:'Konto ma dostęp, ale nie ma uprawnień do tej operacji.',code:'HTTP 403'},
+ {k:'boot',n:'Urządzenie w rozruchu',at:2,msg:'Urządzenie jest w trakcie uruchamiania i jeszcze nie obsługuje żądań. Ponów za chwilę.',code:'HTTP 503'}
+];
+var KC={view:'dash',tabs:[],q:'',mods:{nvr:1,lte:1,bus:1,prn:1},lang:'pl',
+        run:false,T:[],steps:{},logs:[],bus:[],err:'',prn:[],prnNum:'',logFilter:'ALL'};
+function kfLog(k,m){KC.logs.push({t:clock(),k:k,m:m}); if(KC.logs.length>120)KC.logs.shift()}
+function kfStop(){KC.run=false; KC.T.forEach(clearTimeout); KC.T=[]}
+function kfOpen(k){
+  kfStop();
+  KC.view=k;
+  // sytuacja przypisana do innego narzedzia nie moze zostac wybrana po przejsciu
+  var sim=KERRS.filter(function(e){return e.k===KC.err})[0];
+  if(sim&&sim.only&&sim.only!==k)KC.err='';
+  if(k!=='dash'&&KC.tabs.indexOf(k)<0)KC.tabs.push(k);
+  if(KRUNS[k]){KC.steps={}; KC.bus=[]; for(var i=0;i<12;i++)KC.bus.push('idle')}
+  kfRender();
+}
+function kfTools(){return KTOOLS.filter(function(t){return KC.mods[t.k]})}
+function kfName(k){
+  if(k==='dash')return'Pulpit'; if(k==='logs')return'Logi sesji'; if(k==='set')return'Ustawienia';
+  var t=KTOOLS.filter(function(x){return x.k===k})[0]; return t?t.n:k;
+}
+function kfSide(){
+  var it=function(k,ic,n){return '<button class="nav-i'+(KC.view===k?' on':'')+'" data-k="open:'+k+'">'+
+    '<span class="sq">'+ic+'</span>'+n+'</button>'};
+  return '<div class="side"><p class="side-h">Nawigacja</p>'+it('dash','▦','Pulpit')+
+    '<p class="side-h">Narzędzia</p>'+kfTools().map(function(t){return it(t.k,t.ic.slice(0,2),t.n)}).join('')+
+    '<p class="side-h">System</p>'+it('logs','≡','Logi sesji')+it('set','⚙','Ustawienia')+
+    '<div style="border-top:1px solid var(--st-800); margin:12px 8px 0; padding-top:10px">'+
+    '<p class="mini m" style="font-size:10px">wersja 1.2.9 · tryb demo</p></div></div>';
+}
+function kfTabs(){
+  if(!KC.tabs.length)return'';
+  return '<div class="tabbar">'+KC.tabs.map(function(k){
+    return '<button class="tb'+(KC.view===k?' on':'')+'" data-k="open:'+k+'">'+esc(kfName(k))+
+      '<i data-k="shut:'+k+'" title="Zamknij">×</i></button>'}).join('')+'</div>';
+}
+function kfDash(){
+  var q=KC.q.toLowerCase();
+  var list=kfTools().filter(function(t){return !q||t.n.toLowerCase().indexOf(q)>=0||t.d.toLowerCase().indexOf(q)>=0});
+  return '<div class="row" style="justify-content:space-between; margin-bottom:15px">'+
+    '<h4>Pulpit narzędzi</h4>'+
+    '<input type="text" id="kf-q" value="'+esc(KC.q)+'" placeholder="Szukaj narzędzia…" style="width:210px">'+
+    '</div>'+
+    (list.length?'<div class="tiles">'+list.map(function(t){
+      return '<button class="tile" data-k="open:'+t.k+'" title="'+esc(t.d)+'">'+
+        '<span class="tile-ic">'+t.ic+'</span><span class="tile-n">'+esc(t.n)+'</span></button>'}).join('')+'</div>'
+     :'<p class="mini">Brak narzędzi spełniających kryteria. Sprawdź filtr lub włącz moduły w ustawieniach.</p>')+
+    '<p class="mini" style="margin-top:15px">Wyłączone moduły nie pojawiają się ani na pulpicie, ani w menu, tak samo jak w aplikacji.</p>';
+}
+/* Strona urzadzenia zbudowana z osobnych kawalkow. Podczas przebiegu odswiezamy
+   tylko te kawalki, a nie cala powloke: inaczej menu, zakladki i pozycja logu
+   przebudowywalyby sie kilka razy na sekunde i widok skakalby. */
+var BUS_SIZES=['A','A','B','B','C','C','B','A','C','B','A','C'];
+function kfStateHtml(){
+  var t=KC.run?'Konfiguracja w toku':(KC.doneMsg||'Gotowy');
+  var c=KC.run?'pill-b':(KC.doneCls||'pill-n');
+  return '<span class="pill '+c+'">'+esc(t)+'</span>';
+}
+function kfBtnsHtml(k){
+  return '<button class="btn btn-p btn-sm" data-k="run:'+k+'"'+(KC.run?' disabled':'')+'>Start konfiguracji</button>'+
+    '<button class="btn btn-sm" data-k="halt"'+(KC.run?'':' disabled')+'>Stop</button>';
+}
+function kfStepsHtml(k){
+  return KRUNS[k].steps.map(function(s,i){
+    var st=KC.steps[i]||{c:'',t:'oczekuje'};
+    return '<li><span class="sic '+st.c+'">'+(st.c==='done'?'✓':(st.c==='err'?'!':(i+1)))+'</span>'+
+      '<span><span class="st-t">'+esc(s)+'</span><br><span class="st-s">'+esc(st.t)+'</span></span></li>';
+  }).join('');
+}
+function kfBusHtml(){
+  return BUS_SIZES.map(function(s,i){
+    var c=(!KC.bus[i]||KC.bus[i]==='idle')?'':KC.bus[i];
+    return '<div class="bx '+c+'"><b>'+s+'</b>adres '+(i+2)+'</div>';
+  }).join('');
+}
+function kfSumHtml(k){
+  var n=KRUNS[k].steps.length;
+  var done=Object.keys(KC.steps).filter(function(i){return KC.steps[i].c==='done'}).length;
+  return '<tr><th>Kroki</th><td class="m">'+n+'</td></tr>'+
+    '<tr><th>Wykonane</th><td class="m">'+done+' / '+n+'</td></tr>'+
+    '<tr><th>Klasyfikacja błędów</th><td>'+
+      KERRS.filter(function(e){return e.code}).length+' rozpoznawane klasy</td></tr>'+
+    '<tr><th>Log sesji</th><td class="m">'+KC.logs.length+' linii</td></tr>';
+}
+function kfLogHtml(){
+  return KC.logs.length?KC.logs.slice(-40).map(function(l){
+    return '<div><span class="t">'+l.t+'</span> <span class="'+l.k+'">'+esc(l.m)+'</span></div>'}).join('')
+    :'<div class="t">Log pusty.</div>';
+}
+function kfDevice(k){
+  var isBus=(k==='bus');
+  return '<div class="row" style="justify-content:space-between; margin-bottom:14px">'+
+    '<h4>'+esc(kfName(k))+'</h4><span id="kf-state">'+kfStateHtml()+'</span></div>'+
+    '<div class="panel" style="margin-bottom:16px"><div class="row">'+
+    '<span class="row" id="kf-btns">'+kfBtnsHtml(k)+'</span>'+
+    '<span style="width:1px;height:20px;background:var(--st-700)"></span>'+
+    '<span class="mini">Symuluj sytuację</span><select id="kf-err">'+
+    KERRS.filter(function(e){return !e.only||e.only===k})
+      .map(function(e){return '<option value="'+e.k+'"'+(KC.err===e.k?' selected':'')+'>'+esc(e.n)+'</option>'}).join('')+
+    '</select></div><p class="mini" style="margin-top:9px">Klasyfikacja błędów rozróżnia przyczyny zamiast pokazywać jeden komunikat „brak połączenia”.'+
+    (isBus?' Niezgodność modułów to nie błąd komunikacji, a wynik porównania z konfiguracją docelową, dlatego jest osobną sytuacją.':'')+
+    '</p></div>'+
+    '<div class="'+(isBus?'g2':'g2e')+'"><div class="panel"><p class="phbar">Przebieg</p>'+
+    '<ul class="steps" id="kf-steps">'+kfStepsHtml(k)+'</ul></div><div class="panel">'+
+    (isBus?'<p class="phbar">Stan magistrali</p><div class="bus" id="kf-bus">'+kfBusHtml()+'</div>'+
+      '<div class="legend"><span class="row" style="gap:6px"><span class="dot" style="background:var(--grn-hi)"></span>zgodne</span>'+
+      '<span class="row" style="gap:6px"><span class="dot" style="background:var(--amb-hi)"></span>w toku</span>'+
+      '<span class="row" style="gap:6px"><span class="dot" style="background:var(--red-hi)"></span>niezgodność</span>'+
+      '<span class="row" style="gap:6px"><span class="dot" style="background:var(--st-600)"></span>oczekuje</span></div>'
+     :'<p class="phbar">Podsumowanie</p><table><tbody id="kf-sum">'+kfSumHtml(k)+'</tbody></table>')+
+    '<p class="ph" style="margin-top:15px">Log</p><div class="log" id="kf-log">'+kfLogHtml()+'</div>'+
+    '</div></div>';
+}
+function kfPatch(){
+  var k=KC.view; if(!KRUNS[k])return;
+  var set=function(sel,html){var e=$(sel); if(e&&e.innerHTML!==html)e.innerHTML=html};
+  set('#kf-state',kfStateHtml());
+  set('#kf-btns',kfBtnsHtml(k));
+  set('#kf-steps',kfStepsHtml(k));
+  if(k==='bus')set('#kf-bus',kfBusHtml()); else set('#kf-sum',kfSumHtml(k));
+  var lg=$('#kf-log'), lh=kfLogHtml();
+  if(lg&&lg.innerHTML!==lh){lg.innerHTML=lh; lg.scrollTop=lg.scrollHeight}
+}
+function kfPrn(){
+  return '<h4 style="margin-bottom:14px">Skanuj i drukuj</h4>'+
+    '<div class="g2e"><div class="panel"><p class="phbar">Numer do wydruku</p>'+
+    '<p class="mini" style="margin-bottom:10px">Zeskanuj kod czytnikiem lub wpisz numer i zatwierdź. Etykieta drukuje się od razu.</p>'+
+    '<div class="row"><input type="text" id="kf-num" value="'+esc(KC.prnNum)+'" placeholder="np. 4820193" style="width:170px">'+
+    '<button class="btn btn-p btn-sm" data-k="print">Drukuj etykietę</button></div>'+
+    '<p class="mini" style="margin-top:10px" id="kf-perr"></p></div>'+
+    '<div class="panel"><p class="phbar">Historia wydruków</p>'+
+    (KC.prn.length?'<table><tbody>'+KC.prn.map(function(p){
+      return '<tr><td class="m">'+p.t+'</td><td class="m" style="color:#fff">'+esc(p.n)+'</td>'+
+        '<td><span class="pill pill-g">wydrukowano</span></td></tr>'}).join('')+'</tbody></table>'
+      :'<p class="mini">Brak wydruków w tej sesji.</p>')+'</div></div>';
+}
+function kfLogs(){
+  var f=KC.logFilter;
+  var rows=KC.logs.filter(function(l){
+    if(f==='ALL')return true;
+    if(f==='ERR')return l.k==='e';
+    if(f==='WARN')return l.k==='w';
+    return l.k==='s';
+  });
+  return '<h4 style="margin-bottom:14px">Logi sesji</h4>'+
+    '<div class="panel"><div class="row" style="margin-bottom:12px"><div class="tabs">'+
+    [['ALL','Wszystko'],['ERR','Błędy'],['WARN','Ostrzeżenia'],['OK','Sukcesy']].map(function(x){
+      return '<button class="tab'+(f===x[0]?' on':'')+'" data-k="lf:'+x[0]+'">'+x[1]+'</button>'}).join('')+
+    '</div><span class="pill pill-n">'+rows.length+' z '+KC.logs.length+' linii</span></div>'+
+    '<div class="log" style="height:270px">'+
+    (rows.length?rows.map(function(l){
+      return '<div><span class="t">'+l.t+'</span> <span class="'+l.k+'">'+esc(l.m)+'</span></div>'}).join('')
+      :'<div class="t">Brak linii w tym filtrze.</div>')+'</div>'+
+    '<p class="mini" style="margin-top:11px">Każda sesja aplikacji zapisuje osobny plik logu z pełną historią kroków i błędów.</p></div>';
+}
+function kfSet(){
+  return '<h4 style="margin-bottom:14px">Ustawienia</h4><div class="g2e">'+
+    '<div class="panel"><p class="phbar">Moduły</p>'+
+    KTOOLS.map(function(t){
+      return '<label class="sw" style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--st-800)">'+
+        '<span>'+esc(t.n)+'</span><span style="display:inline-flex"><input type="checkbox" data-mod="'+t.k+'"'+
+        (KC.mods[t.k]?' checked':'')+'><span class="tr"></span></span></label>'}).join('')+
+    '<p class="mini" style="margin-top:11px">Wyłączony moduł znika z pulpitu, z menu i z wyszukiwania oraz nie da się go otworzyć.</p></div>'+
+    '<div class="panel"><p class="phbar">Interfejs</p><p class="ph">Język</p>'+
+    '<div class="tabs"><button class="tab'+(KC.lang==='pl'?' on':'')+'" data-k="lang:pl">Polski</button>'+
+    '<button class="tab'+(KC.lang==='en'?' on':'')+'" data-k="lang:en">English</button></div>'+
+    '<p class="mini" style="margin-top:10px">W aplikacji zmiana języka przełącza cały interfejs i proponuje ponowne uruchomienie.</p>'+
+    '<p class="ph" style="margin-top:16px">Parametry skryptów</p><table><tbody>'+
+    '<tr><th>Adres docelowy rejestratora</th><td class="m">10.0.0.20:8080</td></tr>'+
+    '<tr><th>Adres docelowy routera</th><td class="m">10.0.0.1</td></tr>'+
+    '<tr><th>Zakres skanowania magistrali</th><td class="m">2–50</td></tr></tbody></table>'+
+    '<p class="mini" style="margin-top:10px">Parametry są edytowalne bez ingerencji w kod. Sekcja jest chroniona hasłem.</p></div></div>';
+}
+function kfRender(){
+  var body;
+  if(KC.view==='dash')body=kfDash();
+  else if(KC.view==='logs')body=kfLogs();
+  else if(KC.view==='set')body=kfSet();
+  else if(KC.view==='prn')body=kfPrn();
+  else if(KRUNS[KC.view])body=kfDevice(KC.view);
+  else body=kfDash();
+  $('#kf-app').innerHTML='<div class="shell">'+kfSide()+
+    '<div><div>'+kfTabs()+'</div><div class="workarea">'+body+'</div></div></div>';
+  var lg=$('#kf-log'); if(lg)lg.scrollTop=lg.scrollHeight;
+}
+$('#kf-app').addEventListener('input',function(e){
+  if(e.target.id==='kf-q'){KC.q=e.target.value; kfRender(); var q=$('#kf-q'); if(q){q.focus(); q.setSelectionRange(q.value.length,q.value.length)} }
+  if(e.target.id==='kf-num')KC.prnNum=e.target.value;
+});
+$('#kf-app').addEventListener('change',function(e){
+  if(e.target.id==='kf-err')KC.err=e.target.value;
+  if(e.target.dataset && e.target.dataset.mod){
+    var k=e.target.dataset.mod;
+    KC.mods[k]=e.target.checked?1:0;
+    if(!KC.mods[k]){KC.tabs=KC.tabs.filter(function(x){return x!==k}); if(KC.view===k)KC.view='set'}
+    kfLog(e.target.checked?'s':'w','Moduł '+kfName(k)+(e.target.checked?' włączony':' wyłączony'));
+    kfRender();
+  }
+});
+$('#kf-app').addEventListener('click',function(e){
+  var t=e.target.closest('[data-k]'); if(!t)return;
+  var p=t.dataset.k.split(':'), a=p[0], v=p[1];
+  if(a==='shut'){e.stopPropagation();
+    KC.tabs=KC.tabs.filter(function(x){return x!==v});
+    if(KC.view===v)KC.view=KC.tabs.length?KC.tabs[KC.tabs.length-1]:'dash';
+    kfStop(); kfRender(); return;}
+  if(a==='open'){kfOpen(v); return}
+  if(a==='lf'){KC.logFilter=v; kfRender(); return}
+  if(a==='lang'){KC.lang=v; kfLog('','Zmieniono język interfejsu na '+(v==='pl'?'polski':'angielski')); kfRender(); return}
+  if(a==='halt'){kfStop(); kfLog('w','Przerwano na żądanie operatora');
+    KC.doneMsg='Zatrzymany'; KC.doneCls='pill-a'; kfPatch(); return}
+  if(a==='print'){
+    var n=(KC.prnNum||'').trim();
+    if(!/^\d{3,}$/.test(n)){kfRender(); var pe=$('#kf-perr');
+      if(pe){pe.style.color='var(--red-hi)'; pe.textContent='Podaj numer, minimum trzy cyfry.'} return}
+    KC.prn.unshift({t:clock(),n:n}); KC.prnNum='';
+    kfLog('s','Wydrukowano etykietę dla numeru '+n); kfRender(); return;
+  }
+  if(a==='run'){kfRun(v); return}
+});
+function kfRun(k){
+  if(KC.run)return;
+  kfStop(); KC.run=true; KC.steps={}; KC.logs=[]; KC.doneMsg=''; KC.doneCls='';
+  KC.bus=[]; for(var b=0;b<12;b++)KC.bus.push('idle');
+  var cfg=KRUNS[k], n=cfg.steps.length, isBus=(k==='bus');
+  var errDef=KERRS.filter(function(x){return x.k===KC.err})[0]||KERRS[0];
+  var mism=isBus && errDef.k==='mismatch';      // wynik porownania, nie blad
+  var failAt=errDef.code?errDef.at:-1;          // blad komunikacji ma kod
+  var at=function(ms,fn){KC.T.push(setTimeout(function(){if(KC.run)fn()},ms))};
+  var lastStep=(failAt>=0)?failAt:n-1;
+  kfPatch();
+
+  cfg.log.forEach(function(m,i){
+    if(failAt>=0 && i>failAt*2+1)return;
+    at(280+i*560,function(){kfLog('',m); kfPatch()});
+  });
+  for(var i=0;i<=lastStep;i++)(function(i){
+    at(200+i*1000,function(){KC.steps[i]={c:'work',t:'w toku'}; kfPatch()});
+    at(200+i*1000+880,function(){
+      if(i===failAt){
+        KC.steps[i]={c:'err',t:errDef.n};
+        kfLog('e','BŁĄD: '+errDef.n+' ('+errDef.code+')');
+        kfLog('e',errDef.msg);
+        kfLog('w','Ostatni krok: '+cfg.steps[i]);
+        KC.run=false; KC.doneMsg=errDef.n; KC.doneCls='pill-r';
+      } else if(isBus&&i===4&&failAt<0){
+        if(mism){
+          KC.steps[i]={c:'err',t:'wykryto 2 niezgodności'};
+          kfLog('w','Wykryto 2 moduły niezgodne z konfiguracją docelową');
+        } else {
+          KC.steps[i]={c:'done',t:'zakończone'};
+          kfLog('s','Wszystkie 12 modułów zgodne z konfiguracją docelową');
+        }
+      } else KC.steps[i]={c:'done',t:'zakończone'};
+      if(i===lastStep&&failAt<0){
+        KC.run=false;
+        KC.doneMsg=mism?'Zakończono z uwagami':'Zakończono';
+        KC.doneCls=mism?'pill-a':'pill-g';
+      }
+      kfPatch();
+    });
+  })(i);
+  if(isBus&&failAt<0)for(var j=0;j<12;j++)(function(j){
+    at(1300+j*400,function(){
+      KC.bus[j]='work'; kfPatch();
+      KC.T.push(setTimeout(function(){
+        KC.bus[j]=(mism&&(j===6||j===9))?'conf':'done'; kfPatch();
+      },300));
+    });
+  })(j);
+}
+INIT.konfig=function(){if(INIT.konfig.d)return; INIT.konfig.d=1;
+  kfLog('s','Uruchomiono Konfigurator 1.2.9'); kfRender();};
+
+/* =========================================================
+   04 / LAYOUT
+   ========================================================= */
+var LSLOTS={
+  roles:[{k:'r0',n:'Specjalista',req:75,role:1},{k:'r1',n:'Instruktor',req:75,role:1},
+         {k:'r2',n:'Brygadzista',req:75,role:1}],
+  sup:[{k:'s0',n:'Kompletacja 1',req:50},{k:'s1',n:'Kompletacja 2',req:50}],
+  feed:[{k:'f0',n:'Podawanie 1',req:50},{k:'f1',n:'Podawanie 2',req:50}],
+  x1:[{k:'x1',n:'Kontrola M1',req:50}],
+  epa:[{k:'e4',n:'E1',req:75},{k:'e3',n:'E2',req:75},{k:'e2',n:'E3',req:75},{k:'e0',n:'E4',req:75}]
+};
+/* role:1 oznacza kadre obszaru. Kadra obsadza wylacznie stanowiska rolowe,
+   a pozostali wylacznie stanowiska produkcyjne. */
+var LP=[
+ {n:'A. Jabłoński',ab:null,role:1,sk:{r0:90,r1:85,r2:60,s0:80,s1:80,f0:70,f1:70,x1:85,e4:90,e3:85,e2:80,e0:75}},
+ {n:'T. Pawlak',ab:null,role:1,sk:{r0:80,r1:90,r2:70,s0:65,s1:65,f0:55,f1:55,x1:80,e4:85,e3:90,e2:85,e0:80}},
+ {n:'N. Borkowska',ab:null,role:1,sk:{r0:85,r1:80,r2:95,s0:85,s1:85,f0:80,f1:80,x1:85,e4:90,e3:85,e2:85,e0:80}},
+ {n:'R. Sadowska',ab:null,sk:{r0:55,r1:60,r2:45,s0:85,s1:85,f0:90,f1:90,x1:60,e4:45,e3:50,e2:55,e0:40}},
+ {n:'K. Rutkowski',ab:null,sk:{r0:40,r1:45,r2:35,s0:60,s1:60,f0:80,f1:80,x1:55,e4:30,e3:35,e2:40,e0:30}},
+ {n:'M. Ostrowska',ab:'Urlopy',sk:{r0:95,r1:95,r2:90,s0:90,s1:90,f0:85,f1:85,x1:90,e4:95,e3:95,e2:90,e0:90}},
+ {n:'D. Górska',ab:'Zwolnienia lekarskie',sk:{r0:70,r1:65,r2:55,s0:75,s1:75,f0:70,f1:70,x1:70,e4:60,e3:65,e2:70,e0:60}},
+ {n:'Ł. Marciniak',ab:null,sk:{r0:45,r1:50,r2:40,s0:70,s1:70,f0:85,f1:85,x1:65,e4:50,e3:45,e2:55,e0:45}},
+ {n:'E. Zawadzka',ab:'Delegacje',sk:{r0:75,r1:70,r2:65,s0:80,s1:80,f0:75,f1:75,x1:75,e4:80,e3:75,e2:80,e0:70}},
+ {n:'G. Tomczyk',ab:'Szkolenia',tr:'Kontrola M1',sk:{r0:30,r1:35,r2:25,s0:45,s1:45,f0:60,f1:60,x1:40,e4:25,e3:30,e2:35,e0:25}},
+ {n:'S. Michalski',ab:null,sk:{r0:35,r1:40,r2:30,s0:50,s1:50,f0:65,f1:65,x1:45,e4:35,e3:40,e2:45,e0:35}},
+ {n:'J. Duda',ab:'Krwiodawstwo',sk:{r0:60,r1:55,r2:50,s0:70,s1:70,f0:75,f1:75,x1:60,e4:55,e3:60,e2:65,e0:55}}
+];
+LP.forEach(function(p,i){p.id=i});
+var LBUCKETS=['Zwolnienia lekarskie','Urlopy','Krwiodawstwo','Delegacje','Szkolenia'];
+var lAssign={}, lSel=null;
+function lCls(p){return p>=75?'f-hi':(p>=50?'f-mid':'f-lo')}
+function lTxt(p){return p>=75?'75–100%':(p>=50?'50–75%':'0–50%')}
+function lPie(p){return p>=75?'background:#2ee08f'
+  :(p>=50?'background:conic-gradient(#f0b83f 0 75%, #4a3a12 75% 100%)'
+         :'background:conic-gradient(#ff6f6f 0 50%, #4a2020 50% 100%)')}
+function lAll(){var a=[]; for(var g in LSLOTS)a=a.concat(LSLOTS[g]); return a}
+function lSlotOf(k){return lAll().filter(function(s){return s.k===k})[0]}
+// kadra tylko na role, pozostali tylko na stanowiska produkcyjne
+function lFits(p,slot){return slot.role?!!p.role:!p.role}
+function lSlot(s){
+  var pid=lAssign[s.k], p=pid==null?null:LP[pid];
+  return '<button type="button" class="lslot'+(lSel===s.k?' sel':'')+(p?' '+lCls(p.sk[s.k]):'')+'" data-slot="'+s.k+'">'+
+    '<span class="lcap">'+esc(s.n)+'</span>'+
+    (p?'<span class="lnm">'+esc(p.n)+'</span><span class="lcap">'+lTxt(p.sk[s.k])+'</span>'
+      :'<span class="lcap" style="color:var(--st-600)">wolne</span>')+'</button>';
+}
+function lDraw(){
+  [['roles','#lay-roles'],['sup','#lay-sup'],['feed','#lay-feed'],['x1','#lay-x1'],['epa','#lay-epa']]
+    .forEach(function(p){$(p[1]).innerHTML=LSLOTS[p[0]].map(lSlot).join('')});
+  $$('[data-slot]').forEach(function(b){b.addEventListener('click',function(){lSel=b.dataset.slot; lDraw()})});
+
+  var taken={}; for(var k in lAssign)taken[lAssign[k]]=k;
+  var selSlot=lSel?lSlotOf(lSel):null;
+  $('#lay-pool').innerHTML=LP.map(function(p){
+    var av=!p.ab, at=taken[p.id], right;
+    if(!av)right='<span class="pill pill-n">'+esc(p.ab)+'</span>';
+    else if(at&&at===lSel)right='<button class="btn btn-xs" data-un="'+p.id+'">Zdejmij</button>';
+    else if(at)right='<span class="pill pill-b">'+esc(lSlotOf(at).n)+'</span>';
+    else if(!selSlot)right='<span class="mini m">'+(p.role?'kadra':'wolny')+'</span>';
+    else if(!lFits(p,selSlot))right='<span class="pill pill-n">'+(p.role?'tylko role':'nie kadra')+'</span>';
+    else right='<button class="btn btn-xs btn-p" data-as="'+p.id+'">Przypisz</button>';
+    var pc=selSlot?p.sk[lSel]:null;
+    var pie=p.role?'background:#5fb4ff':(pc!=null?lPie(pc):'');
+    return '<div class="pool-i'+(av?'':' off')+'"><span class="row" style="gap:7px">'+
+      (pie?'<span class="pie" style="'+pie+'"></span>':'')+
+      '<span style="color:'+(av?'#fff':'inherit')+'">'+esc(p.n)+'</span>'+
+      (pc!=null?'<span class="mini m">'+pc+'%</span>':'')+'</span>'+right+'</div>';
+  }).join('');
+  $$('[data-as]').forEach(function(b){b.addEventListener('click',function(){
+    var id=+b.dataset.as, s=lSlotOf(lSel), pc=LP[id].sk[lSel];
+    if(!lFits(LP[id],s)){
+      $('#lay-msg').innerHTML='<div class="msg msg-warn">'+esc(LP[id].n)+
+        (LP[id].role?' należy do kadry obszaru i obsadza wyłącznie role.'
+                   :' nie należy do kadry obszaru, więc nie może objąć roli '+esc(s.n)+'.')+'</div>';
+      return;
+    }
+    for(var k in lAssign)if(lAssign[k]===id)delete lAssign[k];
+    lAssign[lSel]=id;
+    $('#lay-msg').innerHTML=pc>=s.req
+      ? '<div class="msg msg-ok">'+esc(LP[id].n)+' spełnia wymagania stanowiska '+esc(s.n)+': '+pc+'% wobec wymaganych '+s.req+'%.</div>'
+      : '<div class="msg msg-warn">'+esc(LP[id].n)+' ma '+pc+'% wobec wymaganych '+s.req+'% na stanowisku '+esc(s.n)+'. Przypisanie oznaczone jako niezgodne z matrycą, zaplanuj szkolenie.</div>';
+    lDraw();
+  })});
+  $$('[data-un]').forEach(function(b){b.addEventListener('click',function(){
+    var id=+b.dataset.un;
+    for(var k in lAssign)if(lAssign[k]===id)delete lAssign[k];
+    $('#lay-msg').innerHTML=''; lDraw();
+  })});
+
+  $('#lay-train').innerHTML=LP.filter(function(p){return p.ab==='Szkolenia'}).map(function(p){
+    return '<span class="chip" style="border-color:var(--blu-hi);color:var(--blu-hi)">'+esc(p.n)+
+      ' <span class="mini m">'+esc(p.tr||'bez stanowiska')+'</span>'+
+      '<button data-back="'+p.id+'" title="Zakończ szkolenie">×</button></span>'}).join('')
+    ||'<span class="mini">Brak osób szkolonych.</span>';
+  var free=LP.filter(function(p){return !p.ab});
+  $('#lay-tctl').innerHTML = free.length
+    ? '<span class="mini m">Na szkolenie</span>'+
+      '<select id="lay-tp">'+free.map(function(p){
+        return '<option value="'+p.id+'">'+esc(p.n)+'</option>'}).join('')+'</select>'+
+      '<span class="mini m">stanowisko</span>'+
+      '<select id="lay-ts">'+lAll().filter(function(s){return !s.role}).map(function(s){
+        return '<option value="'+esc(s.n)+'">'+esc(s.n)+'</option>'}).join('')+'</select>'+
+      '<button class="btn btn-xs btn-p" id="lay-tadd">Dodaj</button>'
+    : '<span class="mini">Wszyscy pracownicy są już nieobecni lub na szkoleniu.</span>';
+  var ta=$('#lay-tadd');
+  if(ta)ta.addEventListener('click',function(){
+    var id=+$('#lay-tp').value, st=$('#lay-ts').value;
+    for(var k in lAssign)if(lAssign[k]===id)delete lAssign[k];
+    LP[id].ab='Szkolenia'; LP[id].tr=st;
+    $('#lay-msg').innerHTML='<div class="msg msg-ok">'+esc(LP[id].n)+
+      ' skierowany na szkolenie na stanowisku '+esc(st)+'. Zniknął z listy dostępnych i z obsady.</div>';
+    lDraw();
+  });
+  $('#lay-buckets').innerHTML=LBUCKETS.map(function(b){
+    var ch=LP.filter(function(p){return p.ab===b}).map(function(p){
+      return '<span class="chip">'+esc(p.n)+'<button data-back="'+p.id+'" title="Przywróć">×</button></span>'}).join('');
+    return '<div class="bucket"><div class="bucket-l">'+esc(b)+'</div><div class="bucket-b">'+(ch||'<span class="mini">brak</span>')+'</div></div>';
+  }).join('');
+  $$('[data-back]').forEach(function(b){b.addEventListener('click',function(){
+    var p=LP[+b.dataset.back]; p.ab=null; p.tr=null; lDraw();
+  })});
+
+  $('#lay-head').textContent='Osoby na obszarze: '+LP.filter(function(p){return !p.ab}).length;
+  $('#lay-c-abs').textContent='Absencje: '+LP.filter(function(p){
+    return p.ab==='Urlopy'||p.ab==='Zwolnienia lekarskie'||p.ab==='Krwiodawstwo'}).length;
+  $('#lay-c-del').textContent='Delegacje: '+LP.filter(function(p){return p.ab==='Delegacje'}).length;
+  $('#lay-c-szk').textContent='Szkolenia: '+LP.filter(function(p){return p.ab==='Szkolenia'}).length;
+}
+$$('[data-area]').forEach(function(b){b.addEventListener('click',function(){
+  $$('[data-area]').forEach(function(o){o.classList.remove('on')}); b.classList.add('on');
+  lAssign={}; lSel=null; $('#lay-msg').innerHTML=''; lDraw();
+})});
+INIT.layout=function(){if(INIT.layout.d)return; INIT.layout.d=1; lDraw()};
+
+/* =========================================================
+   05 / BRIEFING
+   ========================================================= */
+var BT={vol:4800,prd:100,ftr:98};
+var BF={bhp:[{t:'Rozlany płyn przy wejściu do strefy',s:1}],
+        pr:[{t:'Brak palet na stanowisku Y3',i:'Spadek tempa podawania o ok. 15 min',s:0}],
+        uw:[{t:'Zmiana priorytetu zleceń od 14:00'}]};
+var BST=[{l:'nowe',i:'○',c:'pill-r'},{l:'w toku',i:'◐',c:'pill-a'},{l:'zamknięte',i:'✓',c:'pill-g'}];
+function gauge(lbl,val,tgt,unit){
+  var pct=tgt?Math.min(140,val/tgt*100):0, frac=Math.max(0,Math.min(1,pct/100));
+  var L=144.5, off=L*(1-frac);
+  var col=pct>=100?'#2ee08f':(pct>=95?'#f0b83f':'#ff6f6f');
+  return '<div class="gw"><p class="ph" style="margin-bottom:2px">'+esc(lbl)+'</p>'+
+    '<svg viewBox="0 0 108 62" width="116" height="66" role="img" aria-label="'+esc(lbl)+': '+Math.round(pct)+' procent celu">'+
+    '<path d="M 8 54 A 46 46 0 0 1 100 54" fill="none" stroke="#22272d" stroke-width="10" stroke-linecap="round"/>'+
+    '<path d="M 8 54 A 46 46 0 0 1 100 54" fill="none" stroke="'+col+'" stroke-width="10" stroke-linecap="round" '+
+      'stroke-dasharray="'+L+'" stroke-dashoffset="'+off+'"/></svg>'+
+    '<p class="gv">'+(unit==='%'?(Math.round(val*10)/10)+'%':val.toLocaleString('pl-PL'))+'</p>'+
+    '<p class="gs">'+Math.round(pct)+'% celu · cel '+(unit==='%'?tgt+'%':tgt.toLocaleString('pl-PL'))+'</p></div>';
+}
+function bfCard(t,imp,s,key,i){
+  var st=BST[s];
+  return '<div class="card-s"><p class="lbl">Opis</p><p class="txt">'+esc(t)+'</p>'+
+    (imp?'<p class="lbl" style="margin-top:9px">Wpływ na operacje</p><p class="txt">'+esc(imp)+'</p>':'')+
+    '<div class="st-row"><span class="mini m">Status</span>'+
+    '<button class="btn btn-xs" data-bst="'+key+':'+i+'" title="Zmień status">'+st.i+' '+st.l+'</button></div></div>';
+}
+function bfRender(){
+  $('#bf-gauges').innerHTML=
+    gauge('Wolumen',+$('#bf-vol').value||0,BT.vol,'szt')+
+    gauge('Produktywność',+$('#bf-prd').value||0,BT.prd,'%')+
+    gauge('FTR',+$('#bf-ftr').value||0,BT.ftr,'%');
+  var hb=BF.bhp.map(function(x,i){return bfCard(x.t,null,x.s,'bhp',i)}).join('')||'<p class="mini">Brak zdarzeń.</p>';
+  $('#bf-bhp-l').innerHTML=hb; $('#bf-o-bhp').innerHTML=hb;
+  var pr=BF.pr.map(function(x,i){return bfCard(x.t,x.i,x.s,'pr',i)}).join('')||'<p class="mini">Brak zgłoszeń.</p>';
+  $('#bf-pr-l').innerHTML=pr; $('#bf-o-pr').innerHTML=pr;
+  var uw=BF.uw.map(function(x){return '<div class="card-s"><p class="lbl">Komunikat</p><p class="txt">'+esc(x.t)+'</p></div>'}).join('')
+    ||'<p class="mini">Brak komunikatów.</p>';
+  $('#bf-uw-l').innerHTML=uw; $('#bf-o-uw').innerHTML=uw;
+  $$('[data-bst]').forEach(function(b){b.addEventListener('click',function(){
+    var p=b.dataset.bst.split(':'); BF[p[0]][+p[1]].s=(BF[p[0]][+p[1]].s+1)%3; bfRender();
+  })});
+}
+['#bf-vol','#bf-prd','#bf-ftr'].forEach(function(s){$(s).addEventListener('input',bfRender)});
+function bfAdd(taId,arr,extraId){
+  var ta=$(taId);
+  if(!ta.value.trim()){ta.style.borderColor='var(--red-hi)'; return}
+  ta.style.borderColor='';
+  var o={t:ta.value.trim(),s:0};
+  if(extraId){o.i=$(extraId).value.trim(); $(extraId).value=''}
+  arr.push(o); ta.value=''; bfRender();
+}
+$('#bf-bhp-add').addEventListener('click',function(){bfAdd('#bf-bhp',BF.bhp)});
+$('#bf-pr-add').addEventListener('click',function(){bfAdd('#bf-pr',BF.pr,'#bf-pri')});
+$('#bf-uw-add').addEventListener('click',function(){bfAdd('#bf-uw',BF.uw)});
+$$('[data-bt]').forEach(function(b){b.addEventListener('click',function(){
+  $$('[data-bt]').forEach(function(o){o.classList.remove('on')}); b.classList.add('on');
+  var out=b.dataset.bt==='out';
+  $('#bf-in').style.display=out?'none':'grid';
+  $('#bf-out').style.display=out?'block':'none';
+  bfRender();
+})});
+$$('[data-barea]').forEach(function(b){b.addEventListener('click',function(){
+  $$('[data-barea]').forEach(function(o){o.classList.remove('on')}); b.classList.add('on');
+})});
+INIT.brief=function(){if(INIT.brief.d)return; INIT.brief.d=1; bfRender()};
+
+/* =========================================================
+   KONTAKT / kopiowanie adresu
+   Klient pocztowy nie jest zarejestrowany na kazdym systemie, wiec mailto
+   potrafi trafic do przegladarki. Kopiowanie do schowka dziala wszedzie.
+   ========================================================= */
+(function(){
+  var btn=$('#cp-mail'); if(!btn)return;
+  var busy=false;
+  // adres czytany przy kliknieciu, z etykieta jako zapasem, zeby brak atrybutu
+  // nie wywracal calej obslugi
+  function mail(){
+    var a=(btn.dataset.mail||'').trim();
+    if(a)return a;
+    var l=$('#cp-lbl');
+    return l?(l.textContent||'').trim():'';
+  }
+  var addr=mail();
+  function flash(txt,hint){
+    var l=$('#cp-lbl'), h=$('#cp-hint');
+    if(busy)return; busy=true;
+    if(l)l.textContent=txt;
+    if(h)h.textContent=hint;
+    setTimeout(function(){
+      if(l)l.textContent=addr;
+      if(h)h.textContent='Kliknij adres, aby skopiować go do schowka.';
+      busy=false;
+    },1800);
+  }
+  function legacy(){
+    var ta=null;
+    try{
+      ta=document.createElement('textarea');
+      ta.value=mail(); ta.setAttribute('readonly','');
+      ta.style.position='fixed'; ta.style.top='-999px';
+      document.body.appendChild(ta);
+      ta.select(); ta.setSelectionRange(0,ta.value.length);
+      var ok=document.execCommand('copy');
+      document.body.removeChild(ta); ta=null;
+      if(ok){flash('Skopiowano','Adres jest w schowku.'); return}
+    }catch(e){
+      if(ta&&ta.parentNode)try{document.body.removeChild(ta)}catch(e2){}
+    }
+    flash(addr,'Nie udało się skopiować. Zaznacz adres i skopiuj ręcznie.');
+  }
+  btn.addEventListener('click',function(){
+    var a=mail();
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(a).then(function(){
+        flash('Skopiowano','Adres jest w schowku.');
+      },legacy);
+    } else legacy();
+  });
+})();
+})();
+</script>
+</body>
 </html>
