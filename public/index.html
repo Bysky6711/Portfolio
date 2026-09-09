@@ -456,6 +456,14 @@ footer .wrap{max-width:1120px}
   .m{overflow-wrap:anywhere}
 }
 
+/* --- pasek kroków: pionowo zamiast 2+2+1 --- */
+@media(max-width:620px){
+  .flow{grid-template-columns:1fr}
+  .fstep{border-right:0; border-bottom:1px solid var(--st-700); padding:9px 12px}
+  .fstep:last-child{border-bottom:0}
+  .fstep b{margin-bottom:1px}
+}
+
 /* --- demo: przewijanie zamiast rozpychania --- */
 @media(max-width:560px){
   .hmi-body{padding:16px 14px 22px; overflow-x:auto}
