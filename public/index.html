@@ -5,23 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wiktor Filipowski · digitalizacja procesów produkcyjnych</title>
 
-<!-- ==========================================================
-     ADRES STRONY
-     Poniżej, w czterech linijkach, występuje adres zastępczy:
-         https://wiktorfilipowski.pl
-     Gdy strona trafi na serwer, zamień go na jej prawdziwy adres.
-     Najprościej: otwórz ten plik w edytorze tekstu, wciśnij
-     Ctrl+H i zamień wszystkie wystąpienia na raz.
-     Dotyczy to linijek: canonical, og:url, og:image, twitter:image.
-     Nic innego w pliku nie wymaga zmiany.
-
-     Obok pliku HTML wgraj także og-image.png, favicon.png
-     i favicon-32.png, bo do nich prowadzą powyższe adresy.
-
-     Jeśli nie zmienisz adresu, strona nadal będzie działać.
-     Nie pojawi się tylko obrazek w podglądzie po wysłaniu linku
-     na LinkedInie, Messengerze czy Slacku.
-     ========================================================== -->
 <meta name="description" content="Projektuję i wdrażam aplikacje dla produkcji i serwisu. Pięć wdrożonych rozwiązań z klikalnymi demo: klasyfikacja usterek, system Andon, konfigurator urządzeń.">
 <meta name="author" content="Wiktor Filipowski">
 <meta name="robots" content="index, follow">
@@ -260,7 +243,7 @@ section[id]{scroll-margin-top:68px}
 
 /* andon stations */
 .tvgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(104px,1fr)); gap:9px}
-.tvc{border:1px solid var(--st-700); background:var(--st-800); border-radius:var(--r2); padding:14px 8px; text-align:center; cursor:pointer}
+.tvc{border:1px solid var(--st-700); background:var(--st-800); border-radius:var(--r2); padding:14px 8px; text-align:center; cursor:pointer; font:inherit; color:var(--dfg); width:100%; display:block}
 .tvc:hover{border-color:var(--st-500)}
 .tvc.sel{border-color:var(--grn-hi); box-shadow:inset 0 0 0 1px var(--grn-hi)}
 .tvc.ok{background:rgba(46,224,143,.1); border-color:rgba(46,224,143,.5)}
@@ -501,6 +484,17 @@ footer .wrap{max-width:1120px}
   .spec-r{padding:10px 12px}
 }
 </style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person",
+"name":"Wiktor Filipowski",
+"url":"https://wiktorfilipowski.pl/",
+"jobTitle":"Power Platform Developer",
+"description":"Projektuję i wdrażam aplikacje dla produkcji i serwisu: Power Platform, Python, Node.js.",
+"email":"mailto:wpf.filipowskii@gmail.com",
+"address":{"@type":"PostalAddress","addressLocality":"Kraków","addressCountry":"PL"},
+"sameAs":["https://www.linkedin.com/in/wiktorfilipowski"],
+"knowsAbout":["Microsoft Power Apps","Microsoft Power Automate","Microsoft Power BI","AI Builder","Dataverse","Python","PySide6","Node.js","JavaScript","Automatyzacja procesów biznesowych","Cyfryzacja procesów produkcyjnych"]}
+</script>
 </head>
 <body>
 
@@ -533,7 +527,7 @@ footer .wrap{max-width:1120px}
         <p class="spec-h"><span>Rejestr rozwiązań</span><span>05</span></p>
         <a class="spec-r" href="#projekty"><span class="spec-n">01</span>
           <span><span class="spec-t">Automatyczna klasyfikacja usterek</span>
-          <span class="spec-m">Power Automate · AI Builder</span></span></a>
+          <span class="spec-m">Power Automate · AI Builder · Power BI</span></span></a>
         <a class="spec-r" href="#projekty"><span class="spec-n">02</span>
           <span><span class="spec-t">Cyfrowy system Andon</span>
           <span class="spec-m">Node.js · czas rzeczywisty</span></span></a>
@@ -579,7 +573,7 @@ footer .wrap{max-width:1120px}
     <article class="proj feat">
       <div class="proj-head">
         <p class="pmeta"><span class="pidx">01</span><span class="pbar"></span>
-          <span class="proj-date">2026</span><span class="ptype">projekt indywidualny</span><span class="badge">wyróżniony</span></p>
+          <span class="proj-date">wrz 2025 – kwi 2026</span><span class="ptype">projekt indywidualny</span><span class="badge">wyróżniony</span></p>
         <h3>Automatyczna klasyfikacja usterek</h3>
         <p class="proj-hook">Zgłoszenie z formularza jest automatycznie przypisywane do odpowiedniego komponentu. Oczywiste przypadki rozstrzyga ranking punktowy, a model językowy analizuje tylko te niejednoznaczne.</p>
         <ul class="proj-bul">
@@ -593,10 +587,11 @@ footer .wrap{max-width:1120px}
             <li>Wynik zawiera poziom pewności, uzasadnienie oraz znacznik, czy zdecydował ranking, czy model.</li>
             <li>Rekord ląduje w bazie zgłoszeń razem z zapisaną pewnością klasyfikacji, więc jakość działania da się audytować po czasie.</li>
             <li>Powiadomienie na czat zespołu w ustalonym formacie, w dwóch wariantach zależnie od typu zgłoszenia.</li>
+            <li>Interaktywny raport Power BI: analiza zgłoszeń w podziale na okres, obszar, komponent i stanowisko.</li>
           </ul>
-          <p class="proj-res">Wcześniej nie prowadzono ewidencji ani klasyfikacji błędów. Obecnie system wykonuje klasyfikację automatycznie po wysłaniu formularza. Najpierw wykorzystuje ranking punktowy, a model językowy uruchamia tylko w niepewnych przypadkach. Dzięki temu proces jest szybki i powtarzalny, a poziom pewności pomaga wykrywać braki w bazie.</p>
+          <p class="proj-res">Wcześniej nie prowadzono ewidencji ani klasyfikacji błędów. Obecnie system wykonuje klasyfikację automatycznie po wysłaniu formularza. Najpierw wykorzystuje ranking punktowy, a model językowy uruchamia tylko w niepewnych przypadkach. Dzięki temu proces jest szybki i powtarzalny, a poziom pewności pomaga wykrywać braki w bazie. W systemie zarejestrowano i sklasyfikowano <strong>437 zgłoszeń</strong>.</p>
         </div>
-        <div class="tags"><span class="tag">Power Automate</span><span class="tag">Forms</span><span class="tag">Excel Online</span><span class="tag">AI Builder</span><span class="tag">Teams</span></div>
+        <div class="tags"><span class="tag">Power Automate</span><span class="tag">Forms</span><span class="tag">Excel Online</span><span class="tag">AI Builder</span><span class="tag">Power BI</span><span class="tag">Teams</span></div>
         <div class="proj-acts">
           <button class="btn btn-p btn-sm" data-demo="cls">Otwórz demo</button>
           <button class="btn btn-sm" data-more="cls">Pełny opis</button>
@@ -645,7 +640,7 @@ footer .wrap{max-width:1120px}
                 <th class="num">Projekt 5</th><th class="num">Suma</th></tr></thead>
               <tbody id="cl-rows"><tr><td colspan="8" class="mini">Uruchom klasyfikację, aby zobaczyć punktację.</td></tr></tbody>
             </table></div>
-            <p class="mini" style="margin-top:11px">Odcięcie: rekordy poniżej 25 punktów są odrzucane. Do dalszego etapu przechodzą trzy najlepsze. Suma jest ograniczona do 100.</p>
+            <p class="mini" style="margin-top:11px">Odcięcie: rekordy poniżej 25 punktów są odrzucane, do dalszego etapu przechodzą trzy najlepsze, suma jest ograniczona do 100. Bramka: przy 100 punktach ranking rozstrzyga sam, poniżej decyzję podejmuje model.</p>
           </div>
 
           <div id="cl-gate"></div>
@@ -670,7 +665,7 @@ footer .wrap{max-width:1120px}
     <article class="proj">
       <div class="proj-head">
         <p class="pmeta"><span class="pidx">02</span><span class="pbar"></span>
-          <span class="proj-date">2026</span><span class="ptype">projekt zespołowy</span></p>
+          <span class="proj-date">cze 2026 – sie 2026</span><span class="ptype">projekt zespołowy</span></p>
         <h3>Cyfrowy system Andon</h3>
         <p class="proj-hook">Monitorowanie pracy linii w czasie rzeczywistym z interfejsami dopasowanymi do różnych użytkowników.</p>
         <ul class="proj-bul">
@@ -681,7 +676,7 @@ footer .wrap{max-width:1120px}
         <div class="proj-more" id="more-andon">
           <ul class="proj-bul" style="margin-top:0">
             <li>Czas taktu liczony z celu na zmianę i dostępnego czasu netto; przekroczenie uruchamia licznik przestoju.</li>
-            <li>Przerwy operacyjne wstrzymują czas taktu i przestoju, zamiast liczyć go dalej.</li>
+            <li>Przerwy operacyjne oraz aktywne wezwanie wsparcia wstrzymują czas taktu i przestoju, zamiast liczyć go dalej.</li>
             <li>Dziennik zdarzeń oraz osobna historia czasów wykonania każdego taktu, z eksportem do arkusza.</li>
             <li>Planer automatycznego startu zmiany i trwały stan przeżywający restart serwera.</li>
             <li>Sygnał dźwiękowy wezwania wsparcia na ekranie informacyjnym i w panelu brygadzisty.</li>
@@ -714,7 +709,7 @@ footer .wrap{max-width:1120px}
     <article class="proj">
       <div class="proj-head">
         <p class="pmeta"><span class="pidx">03</span><span class="pbar"></span>
-          <span class="proj-date">cze 2026 – obecnie</span><span class="ptype">projekt indywidualny</span></p>
+          <span class="proj-date">lut 2026 – obecnie</span><span class="ptype">projekt indywidualny</span></p>
         <h3>Konfigurator urządzeń</h3>
         <p class="proj-hook">Autorska aplikacja do konfiguracji urządzeń</p>
         <ul class="proj-bul">
@@ -755,7 +750,7 @@ footer .wrap{max-width:1120px}
     <article class="proj">
       <div class="proj-head">
         <p class="pmeta"><span class="pidx">04</span><span class="pbar"></span>
-          <span class="proj-date">mar – wrz 2026</span><span class="ptype">projekt indywidualny</span></p>
+          <span class="proj-date">mar 2026 – wrz 2026</span><span class="ptype">projekt indywidualny</span></p>
         <h3>Layout · obsada stanowisk</h3>
         <p class="proj-hook">Planowanie obsady stanowisk z weryfikacją kwalifikacji, zamiast tablicy magnetycznej i ręcznego sprawdzania uprawnień.</p>
         <ul class="proj-bul">
@@ -785,7 +780,7 @@ footer .wrap{max-width:1120px}
           <button class="btn btn-sm" data-close="layout">Zamknij</button>
         </div>
         <div class="hmi-body">
-          <p class="note">Kliknij stanowisko, potem wybierz osobę z listy. Aplikacja porówna jej poziom w matrycy umiejętności z wymaganiem stanowiska. Osoby nieobecne są zablokowane. Wszystkie nazwiska w demo są wygenerowane.</p>
+          <p class="note">Kliknij stanowisko, potem wybierz osobę z listy. Aplikacja porówna jej poziom w matrycy umiejętności z wymaganiem stanowiska. Osoby nieobecne są zablokowane. Obsada każdego obszaru jest pamiętana osobno — przypisanie osoby zajętej na drugim obszarze oznacza transfer. Wszystkie nazwiska w demo są wygenerowane.</p>
           <div class="row" style="margin-bottom:14px">
             <div class="tabs"><button class="tab on" data-area="ZM1">Obszar ZM1</button><button class="tab" data-area="ZM2">Obszar ZM2</button></div>
             <span class="pill pill-n" id="lay-head">Osoby na obszarze: 0</span>
@@ -841,7 +836,7 @@ footer .wrap{max-width:1120px}
     <article class="proj">
       <div class="proj-head">
         <p class="pmeta"><span class="pidx">05</span><span class="pbar"></span>
-          <span class="proj-date">2026 – obecnie</span><span class="ptype">w rozwoju</span></p>
+          <span class="proj-date">lip 2026 – obecnie</span><span class="ptype">w rozwoju</span></p>
         <h3>Briefing · przekazanie zmiany</h3>
         <p class="proj-hook">Spójny system do obsługi początku i końca zmiany, który oddziela wprowadzanie danych od ich późniejszej analizy.</p>
         <ul class="proj-bul">
@@ -875,7 +870,7 @@ footer .wrap{max-width:1120px}
           <div class="row" style="margin-bottom:14px">
             <div class="tabs"><button class="tab on" data-bt="in">Wprowadzanie danych</button><button class="tab" data-bt="out">Podgląd zarządczy</button></div>
             <div class="tabs"><button class="tab on" data-barea="ZM1">ZM1</button><button class="tab" data-barea="ZM2">ZM2</button></div>
-            <span class="pill pill-n" id="bf-date">08.09.2026 · zmiana I</span>
+            <span class="pill pill-n" id="bf-date">zmiana I</span>
           </div>
           <div id="bf-in" class="g4">
             <div class="panel"><p class="phbar">Dodaj cel na dziś</p>
@@ -909,12 +904,7 @@ footer .wrap{max-width:1120px}
               <p class="ph">Historia · ostatnie zmiany</p>
               <div style="overflow-x:auto"><table>
                 <thead><tr><th>Data</th><th>Zmiana</th><th class="num">Wolumen</th><th class="num">Produktywność</th><th class="num">FTR</th><th>Zgłoszenia</th></tr></thead>
-                <tbody>
-                  <tr><td>07.09</td><td>III</td><td class="num">4 720</td><td class="num">98,3%</td><td class="num">97,8%</td><td><span class="pill pill-n">2 zamknięte</span></td></tr>
-                  <tr><td>07.09</td><td>II</td><td class="num">4 810</td><td class="num">100,2%</td><td class="num">98,4%</td><td><span class="pill pill-n">brak</span></td></tr>
-                  <tr><td>07.09</td><td>I</td><td class="num">4 655</td><td class="num">96,9%</td><td class="num">96,1%</td><td><span class="pill pill-a">1 w toku</span></td></tr>
-                  <tr><td>06.09</td><td>III</td><td class="num">4 900</td><td class="num">102,1%</td><td class="num">98,9%</td><td><span class="pill pill-n">1 zamknięte</span></td></tr>
-                </tbody>
+                <tbody id="bf-hist"></tbody>
               </table></div>
             </div>
           </div>
@@ -947,12 +937,10 @@ footer .wrap{max-width:1120px}
     <p class="eyebrow">Ścieżka</p><h2>Od hali produkcyjnej do projektowania narzędzi</h2>
   </div></div>
   <ul class="tl">
-    <li class="now"><p class="tl-r">Digitalizacja procesów</p><p class="tl-d">obecnie</p>
-      <p class="tl-p">Tworzę i wdrażam narzędzia usprawniające pracę produkcji i serwisu. Pięć rozwiązań działa obecnie w środowisku produkcyjnym.</p></li>
-    <li><p class="tl-r">Brygadzista</p><p class="tl-d">wcześniej</p>
-      <p class="tl-p">Organizowałem pracę zmiany, planowałem obsadę stanowisk i dbałem o przepływ informacji. Pierwsze aplikacje powstały jako odpowiedź na problemy, z którymi spotykałem się każdego dnia</p></li>
+    <li class="now"><p class="tl-r">Brygadzista elektromontażu · cyfryzacja procesów</p><p class="tl-d">obecnie</p>
+      <p class="tl-p">Organizuję pracę zmiany i planuję obsadę stanowisk, a równolegle projektuję oraz wdrażam narzędzia dla produkcji i serwisu. Pięć rozwiązań działa w codziennym użyciu.</p></li>
     <li><p class="tl-r">Produkcja</p><p class="tl-d">start</p>
-      <p class="tl-p">Pracowałem bezpośrednio na stanowiskach produkcyjnych, poznając procesy z perspektywy osób, które realizują je na co dzień.</p></li>
+      <p class="tl-p">Praca bezpośrednio na stanowiskach produkcyjnych. Stąd wiedza o tym, jak procesy wyglądają w rzeczywistości, a nie w dokumentacji — i z tych problemów wzięły się pierwsze aplikacje.</p></li>
   </ul>
 </div></section>
 
@@ -986,6 +974,8 @@ var esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){
   return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
 var pad=function(n){return (n<10?'0':'')+n};
 var clock=function(){return new Date().toTimeString().slice(0,8)};
+var dayPL=function(o){var d=new Date(Date.now()-(o||0)*864e5); return pad(d.getDate())+'.'+pad(d.getMonth()+1)};
+var todayPL=function(){var d=new Date(); return pad(d.getDate())+'.'+pad(d.getMonth()+1)+'.'+d.getFullYear()};
 var mmss=function(s){s=Math.max(0,s); return pad(Math.floor(s/60))+':'+pad(s%60)};
 var INIT={};
 
@@ -1095,7 +1085,7 @@ function clsRun(){
     '<tr><th>Pewność klasyfikacji</th><td><span class="pill '+pc+'">'+res.P+'%</span></td></tr>'+
     '<tr><th>Źródło decyzji</th><td><span class="pill '+(res.TK==='Ranking'?'pill-g':(res.TK==='AI'?'pill-v':'pill-r'))+'">'+esc(res.TK)+'</span></td></tr>';
   $('#cl-teams').innerHTML=
-    '<p class="qq">Data</p><p class="aa">08.09.2026</p>'+
+    '<p class="qq">Data</p><p class="aa">'+todayPL()+'</p>'+
     '<p class="qq" style="margin-top:9px">1. Jaki element uległ uszkodzeniu?</p><p class="aa">'+esc(res.NK)+'</p>'+
     '<p class="qq" style="margin-top:9px">2. Na czym polegała usterka?</p><p class="aa">'+(opRaw?esc(opRaw):'brak')+'</p>'+
     '<p class="qq" style="margin-top:9px">3. Indeks</p><p class="aa">'+(res.I?esc(res.I):'brak, element nierozpoznany')+'</p>'+
@@ -1157,8 +1147,9 @@ function anGrid(selectable){
     else if(AN.isDown&&!st.r){cls+=' err'; sub='Opóźnienie'}
     else if(st.r){cls+=' ok'; sub='Zrobione'}
     if(AN.view===s.toLowerCase())cls+=' sel';
-    return '<div class="'+cls+'"'+(selectable?' data-a="go:'+s.toLowerCase()+'"':'')+'>'+
-      '<div class="tvc-h">'+s+'</div><div class="tvc-s">'+esc(sub)+'</div></div>';
+    var tag=selectable?'button':'div';
+    return '<'+tag+' class="'+cls+'"'+(selectable?' type="button" data-a="go:'+s.toLowerCase()+'"':'')+'>'+
+      '<div class="tvc-h">'+s+'</div><div class="tvc-s">'+esc(sub)+'</div></'+tag+'>';
   }).join('')+'</div>';
 }
 function anCatPanel(){
@@ -1330,12 +1321,14 @@ INIT.andon=function(){
   anLog('s','System uruchomiony','linia Y, tryb demonstracyjny');
   anRender();
   setInterval(function(){
+    /* zegar chodzi tylko wtedy, gdy demo jest otwarte: inaczej zamkniecie karty
+       naliczaloby przestoj w tle i po powrocie licznik pokazywalby bzdury */
+    if(!$('#demo-andon').classList.contains('on'))return;
     if(!AN.run||AN.brk)return;
     if(AST.some(function(s){return AN.st[s].sup}))return;
     AN.left--;
     if(AN.left<=0&&!AN.isDown){AN.isDown=true; anLog('e','Czas taktu przekroczony','')}
     if(AN.isDown)AN.down++;
-    if(!$('#demo-andon').classList.contains('on'))return;
     anRender();
   },1000);
 };
@@ -1412,17 +1405,21 @@ function kfTabs(){
     return '<button class="tb'+(KC.view===k?' on':'')+'" data-k="open:'+k+'">'+esc(kfName(k))+
       '<i data-k="shut:'+k+'" title="Zamknij">×</i></button>'}).join('')+'</div>';
 }
-function kfDash(){
+function kfTilesHtml(){
   var q=KC.q.toLowerCase();
   var list=kfTools().filter(function(t){return !q||t.n.toLowerCase().indexOf(q)>=0||t.d.toLowerCase().indexOf(q)>=0});
+  return list.length?'<div class="tiles">'+list.map(function(t){
+      return '<button class="tile" data-k="open:'+t.k+'" title="'+esc(t.d)+'">'+
+        '<span class="tile-ic">'+t.ic+'</span><span class="tile-n">'+esc(t.n)+'</span></button>'}).join('')+'</div>'
+     :'<p class="mini">Brak narzędzi spełniających kryteria. Sprawdź filtr lub włącz moduły w ustawieniach.</p>';
+}
+/* podmieniamy tylko kafelki, nie cala powloke: inaczej input traci fokus
+   i kursor skacze na koniec przy kazdym znaku */
+function kfDash(){
   return '<div class="row" style="justify-content:space-between; margin-bottom:15px">'+
     '<h4>Pulpit narzędzi</h4>'+
     '<input type="text" id="kf-q" value="'+esc(KC.q)+'" placeholder="Szukaj narzędzia…" style="width:210px">'+
-    '</div>'+
-    (list.length?'<div class="tiles">'+list.map(function(t){
-      return '<button class="tile" data-k="open:'+t.k+'" title="'+esc(t.d)+'">'+
-        '<span class="tile-ic">'+t.ic+'</span><span class="tile-n">'+esc(t.n)+'</span></button>'}).join('')+'</div>'
-     :'<p class="mini">Brak narzędzi spełniających kryteria. Sprawdź filtr lub włącz moduły w ustawieniach.</p>')+
+    '</div><div id="kf-tiles">'+kfTilesHtml()+'</div>'+
     '<p class="mini" style="margin-top:15px">Wyłączone moduły nie pojawiają się ani na pulpicie, ani w menu, tak samo jak w aplikacji.</p>';
 }
 /* Strona urzadzenia zbudowana z osobnych kawalkow. Podczas przebiegu odswiezamy
@@ -1562,7 +1559,7 @@ function kfRender(){
   var lg=$('#kf-log'); if(lg)lg.scrollTop=lg.scrollHeight;
 }
 $('#kf-app').addEventListener('input',function(e){
-  if(e.target.id==='kf-q'){KC.q=e.target.value; kfRender(); var q=$('#kf-q'); if(q){q.focus(); q.setSelectionRange(q.value.length,q.value.length)} }
+  if(e.target.id==='kf-q'){KC.q=e.target.value; var tl=$('#kf-tiles'); if(tl)tl.innerHTML=kfTilesHtml()}
   if(e.target.id==='kf-num')KC.prnNum=e.target.value;
 });
 $('#kf-app').addEventListener('change',function(e){
@@ -1679,7 +1676,7 @@ var LP=[
 ];
 LP.forEach(function(p,i){p.id=i});
 var LBUCKETS=['Zwolnienia lekarskie','Urlopy','Krwiodawstwo','Delegacje','Szkolenia'];
-var lAssign={}, lSel=null;
+var LAREA='ZM1', lAssignAll={ZM1:{},ZM2:{}}, lAssign=lAssignAll.ZM1, lSel=null;
 function lCls(p){return p>=75?'f-hi':(p>=50?'f-mid':'f-lo')}
 function lTxt(p){return p>=75?'75–100%':(p>=50?'50–75%':'0–50%')}
 function lPie(p){return p>=75?'background:#2ee08f'
@@ -1701,13 +1698,18 @@ function lDraw(){
     .forEach(function(p){$(p[1]).innerHTML=LSLOTS[p[0]].map(lSlot).join('')});
   $$('[data-slot]').forEach(function(b){b.addEventListener('click',function(){lSel=b.dataset.slot; lDraw()})});
 
+  lAssignAll[LAREA]=lAssign;
   var taken={}; for(var k in lAssign)taken[lAssign[k]]=k;
+  var other={};
+  for(var oa in lAssignAll){ if(oa===LAREA)continue;
+    for(var ok in lAssignAll[oa])other[lAssignAll[oa][ok]]=oa; }
   var selSlot=lSel?lSlotOf(lSel):null;
   $('#lay-pool').innerHTML=LP.map(function(p){
     var av=!p.ab, at=taken[p.id], right;
     if(!av)right='<span class="pill pill-n">'+esc(p.ab)+'</span>';
     else if(at&&at===lSel)right='<button class="btn btn-xs" data-un="'+p.id+'">Zdejmij</button>';
     else if(at)right='<span class="pill pill-b">'+esc(lSlotOf(at).n)+'</span>';
+    else if(other[p.id]&&!selSlot)right='<span class="pill pill-v">obszar '+esc(other[p.id])+'</span>';
     else if(!selSlot)right='<span class="mini m">'+(p.role?'kadra':'wolny')+'</span>';
     else if(!lFits(p,selSlot))right='<span class="pill pill-n">'+(p.role?'tylko role':'nie kadra')+'</span>';
     else right='<button class="btn btn-xs btn-p" data-as="'+p.id+'">Przypisz</button>';
@@ -1727,10 +1729,17 @@ function lDraw(){
       return;
     }
     for(var k in lAssign)if(lAssign[k]===id)delete lAssign[k];
+    var moved='';
+    for(var oa in lAssignAll){
+      if(oa===LAREA)continue;
+      for(var ok in lAssignAll[oa])if(lAssignAll[oa][ok]===id){delete lAssignAll[oa][ok]; moved=oa}
+    }
     lAssign[lSel]=id;
-    $('#lay-msg').innerHTML=pc>=s.req
+    var msg=pc>=s.req
       ? '<div class="msg msg-ok">'+esc(LP[id].n)+' spełnia wymagania stanowiska '+esc(s.n)+': '+pc+'% wobec wymaganych '+s.req+'%.</div>'
       : '<div class="msg msg-warn">'+esc(LP[id].n)+' ma '+pc+'% wobec wymaganych '+s.req+'% na stanowisku '+esc(s.n)+'. Przypisanie oznaczone jako niezgodne z matrycą, zaplanuj szkolenie.</div>';
+    if(moved)msg='<div class="msg msg-ok">'+esc(LP[id].n)+' przeniesiony z obszaru '+esc(moved)+'.</div>'+msg;
+    $('#lay-msg').innerHTML=msg;
     lDraw();
   })});
   $$('[data-un]').forEach(function(b){b.addEventListener('click',function(){
@@ -1779,8 +1788,12 @@ function lDraw(){
   $('#lay-c-szk').textContent='Szkolenia: '+LP.filter(function(p){return p.ab==='Szkolenia'}).length;
 }
 $$('[data-area]').forEach(function(b){b.addEventListener('click',function(){
+  if(b.dataset.area===LAREA)return;
+  lAssignAll[LAREA]=lAssign;
   $$('[data-area]').forEach(function(o){o.classList.remove('on')}); b.classList.add('on');
-  lAssign={}; lSel=null; $('#lay-msg').innerHTML=''; lDraw();
+  LAREA=b.dataset.area;
+  lAssign=lAssignAll[LAREA]||(lAssignAll[LAREA]={});
+  lSel=null; $('#lay-msg').innerHTML=''; lDraw();
 })});
 INIT.layout=function(){if(INIT.layout.d)return; INIT.layout.d=1; lDraw()};
 
@@ -1867,7 +1880,7 @@ function bfSave(){var d=BF_();
   d.vol=+$('#bf-vol').value||0; d.prd=+$('#bf-prd').value||0; d.ftr=+$('#bf-ftr').value||0}
 function bfLoad(){var d=BF_();
   $('#bf-vol').value=d.vol; $('#bf-prd').value=d.prd; $('#bf-ftr').value=d.ftr;
-  $('#bf-date').textContent='08.09.2026 · '+d.lbl}
+  $('#bf-date').textContent=todayPL()+' · '+d.lbl}
 $$('[data-barea]').forEach(function(b){b.addEventListener('click',function(){
   if(b.dataset.barea===BAREA) return;
   bfSave();
@@ -1875,7 +1888,17 @@ $$('[data-barea]').forEach(function(b){b.addEventListener('click',function(){
   BAREA=b.dataset.barea;
   bfLoad(); bfRender();
 })});
-INIT.brief=function(){if(INIT.brief.d)return; INIT.brief.d=1; bfLoad(); bfRender()};
+function bfHist(){
+  var rows=[[dayPL(1),'III','4 720','98,3%','97,8%','pill-n','2 zamknięte'],
+            [dayPL(1),'II','4 810','100,2%','98,4%','pill-n','brak'],
+            [dayPL(1),'I','4 655','96,9%','96,1%','pill-a','1 w toku'],
+            [dayPL(2),'III','4 900','102,1%','98,9%','pill-n','1 zamknięte']];
+  $('#bf-hist').innerHTML=rows.map(function(r){
+    return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td class="num">'+r[2]+'</td>'+
+      '<td class="num">'+r[3]+'</td><td class="num">'+r[4]+'</td>'+
+      '<td><span class="pill '+r[5]+'">'+r[6]+'</span></td></tr>'}).join('');
+}
+INIT.brief=function(){if(INIT.brief.d)return; INIT.brief.d=1; bfLoad(); bfHist(); bfRender()};
 
 /* =========================================================
    KONTAKT / kopiowanie adresu
