@@ -475,6 +475,18 @@ footer .wrap{max-width:1120px}
   .side{padding:10px 8px}
 }
 
+/* --- wynik klasyfikacji: JSON i tabele etykieta/wartość --- */
+@media(max-width:560px){
+  .jsonbox{font-size:10.5px; padding:10px; line-height:1.65;
+    white-space:pre-wrap; overflow-wrap:anywhere; overflow-x:visible}
+  .hmi tbody th{display:block; width:auto !important;
+    padding:10px 0 2px 0; border-bottom:0}
+  .hmi tbody th + td{display:block; padding:0 0 10px 0;
+    border-bottom:1px solid var(--st-800)}
+  .hmi tbody tr:last-child th + td{border-bottom:0}
+  .teams{padding:11px; font-size:12px}
+}
+
 /* --- cele dotykowe --- */
 @media(max-width:760px){
   .hero-cta a,.hero-cta button{min-height:44px; display:inline-flex;
@@ -542,15 +554,15 @@ footer .wrap{max-width:1120px}
 <section id="how"><div class="wrap">
   <div class="shead"><span class="snum">01</span><div>
     <p class="eyebrow">Metoda</p>
-    <h2>Od obserwacji procesu do narzędzia w codziennym użyciu</h2>
+    <h2>Jak tworzę rozwiązania, które trafiają do codziennego użytku</h2>
   </div></div>
   <div class="grid-b">
-    <div class="gb"><p class="gb-n">Analiza <span class="ar">→</span></p><h4>Proces w rzeczywistym przebiegu</h4>
+    <div class="gb"><p class="gb-n">Analiza <span class="ar">→</span></p><h4>Poznanie procesu</h4>
       <p>Obserwuję rzeczywisty przebieg pracy i identyfikuję miejsca, w których ręczne działania, rozproszone dane i nieformalne ustalenia ograniczają efektywność.</p></div>
-    <div class="gb"><p class="gb-n">Projekt <span class="ar">→</span></p><h4>Osobny ekran dla każdej roli</h4>
-      <p>Brygadzista na hali, technik przy urządzeniu i kierownik analizujący raport potrzebują innych informacji oraz funkcji. Dlatego każdy interfejs projektuję pod konkretną rolę i warunki pracy.</p></div>
-    <div class="gb"><p class="gb-n">Wdrożenie</p><h4>Weryfikuję rozwiązanie w praktyce</h4>
-      <p>Po wdrożeniu analizuję sposób korzystania z narzędzia, zbieram opinie użytkowników i rozwijam je na podstawie rzeczywistych doświadczeń.</p></div>
+    <div class="gb"><p class="gb-n">Projekt <span class="ar">→</span></p><h4>Projektowanie z myślą o użytkowniku</h4>
+      <p>Tworzę interfejsy odpowiadające na potrzeby konkretnych użytkowników, niezależnie od tego, czy pracują na hali, przy urządzeniu, czy analizują raporty.</p></div>
+    <div class="gb"><p class="gb-n">Wdrożenie</p><h4>Wdrożenie to dopiero początek</h4>
+      <p>Po uruchomieniu narzędzia analizuję jego działanie w praktyce i wprowadzam zmiany wynikające z codziennego użytkowania.</p></div>
   </div>
 </div></section>
 
@@ -558,7 +570,7 @@ footer .wrap{max-width:1120px}
   <div class="shead"><span class="snum">02</span><div>
     <p class="eyebrow">Projekty</p>
     <h2>Pięć wdrożonych rozwiązań</h2>
-    <p class="lead" style="margin-top:12px">Każdy projekt ma klikalne demo: uproszczoną rekonstrukcję działania na danych fikcyjnych.</p>
+    <p class="lead" style="margin-top:12px">Do każdego projektu przygotowałem interaktywne demo, odtwarzające najważniejsze funkcje z wykorzystaniem fikcyjnych danych.</p>
   </div></div>
 
   <div class="projects">
@@ -569,20 +581,20 @@ footer .wrap{max-width:1120px}
         <p class="pmeta"><span class="pidx">01</span><span class="pbar"></span>
           <span class="proj-date">2026</span><span class="ptype">projekt indywidualny</span><span class="badge">wyróżniony</span></p>
         <h3>Automatyczna klasyfikacja usterek</h3>
-        <p class="proj-hook">Zgłoszenie z formularza trafia do właściwego komponentu w bazie automatycznie. Ranking punktowy rozstrzyga oczywiste przypadki, model językowy dopiero te niepewne.</p>
+        <p class="proj-hook">Zgłoszenie z formularza jest automatycznie przypisywane do odpowiedniego komponentu. Oczywiste przypadki rozstrzyga ranking punktowy, a model językowy analizuje tylko te niejednoznaczne.</p>
         <ul class="proj-bul">
-          <li>Technik wypełnia formularz zgłoszenia usterki; dalej wszystko dzieje się bez udziału człowieka.</li>
-          <li>Deterministyczny ranking punktuje każdy rekord bazy wiedzy: indeks, nazwa elementu, słowa kluczowe, typowe problemy, typ operacji.</li>
+          <li>Po wypełnieniu formularza przez pracownika cały proces przebiega automatycznie, bez udziału człowieka.</li>
+          <li>Każdy rekord otrzymuje punkty za zgodność indeksu, nazwy elementu, słów kluczowych, typowych problemów oraz typu operacji.</li>
           <li>Model językowy uruchamia się wyłącznie wtedy, gdy ranking nie daje jednoznacznego wskazania, i wybiera tylko z trzech najlepszych kandydatów.</li>
         </ul>
         <div class="proj-more" id="more-cls">
           <ul class="proj-bul" style="margin-top:0">
-            <li>Prompt zabrania wychodzenia poza listę kandydatów i wymyślania nazw, indeksów oraz stanowisk; ma jawną ścieżkę „brak w bazie”.</li>
+            <li>Model wybiera wyłącznie spośród wskazanych kandydatów. Nie może tworzyć nowych nazw, indeksów ani stanowisk, a brak dopasowania oznacza wynik „brak w bazie”.</li>
             <li>Wynik zawiera poziom pewności, uzasadnienie oraz znacznik, czy zdecydował ranking, czy model.</li>
             <li>Rekord ląduje w bazie zgłoszeń razem z zapisaną pewnością klasyfikacji, więc jakość działania da się audytować po czasie.</li>
             <li>Powiadomienie na czat zespołu w ustalonym formacie, w dwóch wariantach zależnie od typu zgłoszenia.</li>
           </ul>
-          <p class="proj-res">Klasyfikacja, która wcześniej wymagała ręcznego przeszukania bazy komponentów, wykonuje się natychmiast po wysłaniu formularza. Dwustopniowa konstrukcja (najpierw ranking, potem model) utrzymuje koszt i czas odpowiedzi nisko, a wynik pozostaje powtarzalny i wyjaśnialny. Zapisana pewność pokazuje, gdzie baza wiedzy ma luki.</p>
+          <p class="proj-res">Wcześniej nie prowadzono ewidencji ani klasyfikacji błędów. Obecnie system wykonuje klasyfikację automatycznie po wysłaniu formularza. Najpierw wykorzystuje ranking punktowy, a model językowy uruchamia tylko w niepewnych przypadkach. Dzięki temu proces jest szybki i powtarzalny, a poziom pewności pomaga wykrywać braki w bazie.</p>
         </div>
         <div class="tags"><span class="tag">Power Automate</span><span class="tag">Forms</span><span class="tag">Excel Online</span><span class="tag">AI Builder</span><span class="tag">Teams</span></div>
         <div class="proj-acts">
@@ -660,7 +672,7 @@ footer .wrap{max-width:1120px}
         <p class="pmeta"><span class="pidx">02</span><span class="pbar"></span>
           <span class="proj-date">2026</span><span class="ptype">projekt zespołowy</span></p>
         <h3>Cyfrowy system Andon</h3>
-        <p class="proj-hook">Monitorowanie linii w czasie rzeczywistym, trzy różne interfejsy na jednym wspólnym stanie. Autorska aplikacja, która zastąpiła zewnętrzne oprogramowanie.</p>
+        <p class="proj-hook">Monitorowanie pracy linii w czasie rzeczywistym z interfejsami dopasowanymi do różnych użytkowników.</p>
         <ul class="proj-bul">
           <li>Osobne widoki dla operatora na stanowisku, brygadzisty i ekranu informacyjnego linii: ten sam stan, inna perspektywa.</li>
           <li>Cykl zamyka się dopiero wtedy, gdy wszystkie stanowiska potwierdzą wykonanie; dashboard pokazuje, kto opóźnia.</li>
@@ -704,11 +716,11 @@ footer .wrap{max-width:1120px}
         <p class="pmeta"><span class="pidx">03</span><span class="pbar"></span>
           <span class="proj-date">cze 2026 – obecnie</span><span class="ptype">projekt indywidualny</span></p>
         <h3>Konfigurator urządzeń</h3>
-        <p class="proj-hook">Jedno narzędzie zamiast kilku skryptów: przygotowanie i konfiguracja urządzeń do instalacji terenowych, z powłoką aplikacji, zakładkami i logami sesyjnymi.</p>
+        <p class="proj-hook">Autorska aplikacja do konfiguracji urządzeń</p>
         <ul class="proj-bul">
-          <li>Zastępuje kilka niezależnych narzędzi i skryptów jednym interfejsem, prowadząc przez cały proces konfiguracji.</li>
-          <li>Prowadzi krok po kroku, prezentując postęp i status każdego etapu graficznie, zamiast surowych komunikatów konsoli.</li>
-          <li>Precyzyjna klasyfikacja błędów komunikacji zamiast jednego „brak połączenia”: urządzenie nieosiągalne, przekroczony czas, błędne hasło, brak uprawnień, urządzenie w rozruchu.</li>
+          <li>Łączy wszystkie operacje konfiguracyjne w jednej aplikacji.</li>
+          <li>Pokazuje przebieg procesu i wyniki poszczególnych etapów bez konieczności analizowania komunikatów konsoli.</li>
+          <li>Precyzyjnie określa rodzaj błędu, ułatwiając szybkie znalezienie jego przyczyny.</li>
         </ul>
         <div class="proj-more" id="more-konfig">
           <ul class="proj-bul" style="margin-top:0">
@@ -718,7 +730,7 @@ footer .wrap{max-width:1120px}
             <li>Włączanie i wyłączanie modułów, dwujęzyczny interfejs, historia działań w logach sesyjnych, zmiana parametrów bez ingerencji w kod.</li>
             <li>Dystrybuowana jako aplikacja przenośna, gotowa do uruchomienia bez instalacji.</li>
           </ul>
-          <p class="proj-res">Rozwijana iteracyjnie na podstawie informacji zwrotnych z pracy na rzeczywistym sprzęcie. Proces konfiguracji jest szybszy, bardziej uporządkowany i mniej podatny na błędy, a próg wejścia dla nowych techników wyraźnie niższy, bo cała procedura odbywa się w jednym narzędziu.</p>
+          <p class="proj-res">Rozwiązanie jest regularnie udoskonalane w oparciu o doświadczenia z codziennej pracy. Połączenie całej procedury w jednym narzędziu przyspiesza konfigurację, ogranicza błędy i ułatwia wdrażanie nowych techników.</p>
         </div>
         <div class="tags"><span class="tag">Python</span><span class="tag">Qt / PySide6</span><span class="tag">Komunikacja z urządzeniami</span><span class="tag">Aplikacja przenośna</span></div>
         <div class="proj-acts">
@@ -775,7 +787,7 @@ footer .wrap{max-width:1120px}
         <div class="hmi-body">
           <p class="note">Kliknij stanowisko, potem wybierz osobę z listy. Aplikacja porówna jej poziom w matrycy umiejętności z wymaganiem stanowiska. Osoby nieobecne są zablokowane. Wszystkie nazwiska w demo są wygenerowane.</p>
           <div class="row" style="margin-bottom:14px">
-            <div class="tabs"><button class="tab on" data-area="EL1">Obszar EL1</button><button class="tab" data-area="EL2">Obszar EL2</button></div>
+            <div class="tabs"><button class="tab on" data-area="ZM1">Obszar ZM1</button><button class="tab" data-area="ZM2">Obszar ZM2</button></div>
             <span class="pill pill-n" id="lay-head">Osoby na obszarze: 0</span>
           </div>
           <div class="g3">
@@ -831,7 +843,7 @@ footer .wrap{max-width:1120px}
         <p class="pmeta"><span class="pidx">05</span><span class="pbar"></span>
           <span class="proj-date">2026 – obecnie</span><span class="ptype">w rozwoju</span></p>
         <h3>Briefing · przekazanie zmiany</h3>
-        <p class="proj-hook">Uporządkowane rozpoczęcie i zakończenie zmiany w dwóch aplikacjach: jedna do wprowadzania danych, druga do ich odczytu i analizy.</p>
+        <p class="proj-hook">Spójny system do obsługi początku i końca zmiany, który oddziela wprowadzanie danych od ich późniejszej analizy.</p>
         <ul class="proj-bul">
           <li>Rejestrowanie celów i rzeczywistych wyników: wolumen, produktywność, wskaźnik FTR.</li>
           <li>Zdarzenia BHP, problemy operacyjne z opisem wpływu na operacje i statusami prezentowanymi ikonami.</li>
@@ -862,8 +874,8 @@ footer .wrap{max-width:1120px}
           <p class="note">Wprowadź wyniki i dodaj zgłoszenia w widoku brygadzisty, potem przełącz się na podgląd zarządczy. Kliknięcie statusu przy zgłoszeniu przechodzi kolejno: nowe → w toku → zamknięte.</p>
           <div class="row" style="margin-bottom:14px">
             <div class="tabs"><button class="tab on" data-bt="in">Wprowadzanie danych</button><button class="tab" data-bt="out">Podgląd zarządczy</button></div>
-            <div class="tabs"><button class="tab on" data-barea="EL1">EL1</button><button class="tab" data-barea="EL2">EL2</button></div>
-            <span class="pill pill-n">08.09.2026 · zmiana I</span>
+            <div class="tabs"><button class="tab on" data-barea="ZM1">ZM1</button><button class="tab" data-barea="ZM2">ZM2</button></div>
+            <span class="pill pill-n" id="bf-date">08.09.2026 · zmiana I</span>
           </div>
           <div id="bf-in" class="g4">
             <div class="panel"><p class="phbar">Dodaj cel na dziś</p>
@@ -891,9 +903,7 @@ footer .wrap{max-width:1120px}
               <div class="panel"><p class="phbar">Cel na dzień</p><div id="bf-gauges"></div></div>
               <div class="panel"><p class="phbar">BHP · zdarzenia</p><div id="bf-o-bhp"></div></div>
               <div class="panel"><p class="phbar">Problemy · zgłoszenia</p><div id="bf-o-pr"></div></div>
-              <div class="panel"><p class="phbar">Dodatkowe uwagi</p><div id="bf-o-uw"></div>
-                <div style="border-top:1px solid var(--st-700); margin-top:13px; padding-top:12px">
-                  <span class="pill pill-b">Integracja z Power BI</span></div></div>
+              <div class="panel"><p class="phbar">Dodatkowe uwagi</p><div id="bf-o-uw"></div></div>
             </div>
             <div class="panel" style="margin-top:16px">
               <p class="ph">Historia · ostatnie zmiany</p>
@@ -938,11 +948,11 @@ footer .wrap{max-width:1120px}
   </div></div>
   <ul class="tl">
     <li class="now"><p class="tl-r">Digitalizacja procesów</p><p class="tl-d">obecnie</p>
-      <p class="tl-p">Projektowanie i wdrażanie aplikacji wspierających produkcję i serwis. Pięć rozwiązań w codziennym użyciu.</p></li>
+      <p class="tl-p">Tworzę i wdrażam narzędzia usprawniające pracę produkcji i serwisu. Pięć rozwiązań działa obecnie w środowisku produkcyjnym.</p></li>
     <li><p class="tl-r">Brygadzista</p><p class="tl-d">wcześniej</p>
-      <p class="tl-p">Organizacja pracy zmiany, obsada stanowisk, przekazywanie informacji między zmianami. Stąd wzięły się pierwsze aplikacje: z problemów, które miałem na własnej zmianie.</p></li>
+      <p class="tl-p">Organizowałem pracę zmiany, planowałem obsadę stanowisk i dbałem o przepływ informacji. Pierwsze aplikacje powstały jako odpowiedź na problemy, z którymi spotykałem się każdego dnia</p></li>
     <li><p class="tl-r">Produkcja</p><p class="tl-d">start</p>
-      <p class="tl-p">Praca na stanowiskach produkcyjnych, czyli źródło wiedzy o tym, jak procesy wyglądają w rzeczywistości, a nie w dokumentacji.</p></li>
+      <p class="tl-p">Pracowałem bezpośrednio na stanowiskach produkcyjnych, poznając procesy z perspektywy osób, które realizują je na co dzień.</p></li>
   </ul>
 </div></section>
 
@@ -1778,9 +1788,18 @@ INIT.layout=function(){if(INIT.layout.d)return; INIT.layout.d=1; lDraw()};
    05 / BRIEFING
    ========================================================= */
 var BT={vol:4800,prd:100,ftr:98};
-var BF={bhp:[{t:'Rozlany płyn przy wejściu do strefy',s:1}],
-        pr:[{t:'Brak palet na stanowisku Y3',i:'Spadek tempa podawania o ok. 15 min',s:0}],
-        uw:[{t:'Zmiana priorytetu zleceń od 14:00'}]};
+var BAREA='ZM1';
+var BFD={
+  ZM1:{vol:4650, prd:96, ftr:95, lbl:'zmiana I',
+       bhp:[{t:'Rozlany płyn przy wejściu do strefy',s:1}],
+       pr:[{t:'Brak palet na stanowisku Y3',i:'Spadek tempa podawania o ok. 15 min',s:0}],
+       uw:[{t:'Zmiana priorytetu zleceń od 14:00'}]},
+  ZM2:{vol:4805, prd:99.4, ftr:97.6, lbl:'zmiana II',
+       bhp:[],
+       pr:[{t:'Przestój podajnika na stanowisku Y1',i:'Wstrzymanie linii na ok. 8 min',s:2}],
+       uw:[]}
+};
+function BF_(){return BFD[BAREA]}
 var BST=[{l:'nowe',i:'○',c:'pill-r'},{l:'w toku',i:'◐',c:'pill-a'},{l:'zamknięte',i:'✓',c:'pill-g'}];
 function gauge(lbl,val,tgt,unit){
   var pct=tgt?Math.min(140,val/tgt*100):0, frac=Math.max(0,Math.min(1,pct/100));
@@ -1801,20 +1820,28 @@ function bfCard(t,imp,s,key,i){
     '<div class="st-row"><span class="mini m">Status</span>'+
     '<button class="btn btn-xs" data-bst="'+key+':'+i+'" title="Zmień status">'+st.i+' '+st.l+'</button></div></div>';
 }
+function bfCnt(n,f){
+  if(!n) return '<p class="mini m">Brak wpisów.</p>';
+  var k = n===1 ? f[0] : (n%10>=2 && n%10<=4 && (n%100<12||n%100>14)) ? f[1] : f[2];
+  return '<p class="mini m">Dodano: '+n+' '+k+'</p>';
+}
 function bfRender(){
   $('#bf-gauges').innerHTML=
     gauge('Wolumen',+$('#bf-vol').value||0,BT.vol,'szt')+
     gauge('Produktywność',+$('#bf-prd').value||0,BT.prd,'%')+
     gauge('FTR',+$('#bf-ftr').value||0,BT.ftr,'%');
-  var hb=BF.bhp.map(function(x,i){return bfCard(x.t,null,x.s,'bhp',i)}).join('')||'<p class="mini">Brak zdarzeń.</p>';
-  $('#bf-bhp-l').innerHTML=hb; $('#bf-o-bhp').innerHTML=hb;
-  var pr=BF.pr.map(function(x,i){return bfCard(x.t,x.i,x.s,'pr',i)}).join('')||'<p class="mini">Brak zgłoszeń.</p>';
-  $('#bf-pr-l').innerHTML=pr; $('#bf-o-pr').innerHTML=pr;
-  var uw=BF.uw.map(function(x){return '<div class="card-s"><p class="lbl">Komunikat</p><p class="txt">'+esc(x.t)+'</p></div>'}).join('')
+  var hb=BF_().bhp.map(function(x,i){return bfCard(x.t,null,x.s,'bhp',i)}).join('')||'<p class="mini">Brak zdarzeń.</p>';
+  $('#bf-o-bhp').innerHTML=hb;
+  $('#bf-bhp-l').innerHTML=bfCnt(BF_().bhp.length,['zdarzenie','zdarzenia','zdarzeń']);
+  var pr=BF_().pr.map(function(x,i){return bfCard(x.t,x.i,x.s,'pr',i)}).join('')||'<p class="mini">Brak zgłoszeń.</p>';
+  $('#bf-o-pr').innerHTML=pr;
+  $('#bf-pr-l').innerHTML=bfCnt(BF_().pr.length,['zgłoszenie','zgłoszenia','zgłoszeń']);
+  var uw=BF_().uw.map(function(x){return '<div class="card-s"><p class="lbl">Komunikat</p><p class="txt">'+esc(x.t)+'</p></div>'}).join('')
     ||'<p class="mini">Brak komunikatów.</p>';
-  $('#bf-uw-l').innerHTML=uw; $('#bf-o-uw').innerHTML=uw;
+  $('#bf-o-uw').innerHTML=uw;
+  $('#bf-uw-l').innerHTML=bfCnt(BF_().uw.length,['komunikat','komunikaty','komunikatów']);
   $$('[data-bst]').forEach(function(b){b.addEventListener('click',function(){
-    var p=b.dataset.bst.split(':'); BF[p[0]][+p[1]].s=(BF[p[0]][+p[1]].s+1)%3; bfRender();
+    var p=b.dataset.bst.split(':'); var a=BF_()[p[0]][+p[1]]; a.s=(a.s+1)%3; bfRender();
   })});
 }
 ['#bf-vol','#bf-prd','#bf-ftr'].forEach(function(s){$(s).addEventListener('input',bfRender)});
@@ -1826,9 +1853,9 @@ function bfAdd(taId,arr,extraId){
   if(extraId){o.i=$(extraId).value.trim(); $(extraId).value=''}
   arr.push(o); ta.value=''; bfRender();
 }
-$('#bf-bhp-add').addEventListener('click',function(){bfAdd('#bf-bhp',BF.bhp)});
-$('#bf-pr-add').addEventListener('click',function(){bfAdd('#bf-pr',BF.pr,'#bf-pri')});
-$('#bf-uw-add').addEventListener('click',function(){bfAdd('#bf-uw',BF.uw)});
+$('#bf-bhp-add').addEventListener('click',function(){bfAdd('#bf-bhp',BF_().bhp)});
+$('#bf-pr-add').addEventListener('click',function(){bfAdd('#bf-pr',BF_().pr,'#bf-pri')});
+$('#bf-uw-add').addEventListener('click',function(){bfAdd('#bf-uw',BF_().uw)});
 $$('[data-bt]').forEach(function(b){b.addEventListener('click',function(){
   $$('[data-bt]').forEach(function(o){o.classList.remove('on')}); b.classList.add('on');
   var out=b.dataset.bt==='out';
@@ -1836,10 +1863,19 @@ $$('[data-bt]').forEach(function(b){b.addEventListener('click',function(){
   $('#bf-out').style.display=out?'block':'none';
   bfRender();
 })});
+function bfSave(){var d=BF_();
+  d.vol=+$('#bf-vol').value||0; d.prd=+$('#bf-prd').value||0; d.ftr=+$('#bf-ftr').value||0}
+function bfLoad(){var d=BF_();
+  $('#bf-vol').value=d.vol; $('#bf-prd').value=d.prd; $('#bf-ftr').value=d.ftr;
+  $('#bf-date').textContent='08.09.2026 · '+d.lbl}
 $$('[data-barea]').forEach(function(b){b.addEventListener('click',function(){
+  if(b.dataset.barea===BAREA) return;
+  bfSave();
   $$('[data-barea]').forEach(function(o){o.classList.remove('on')}); b.classList.add('on');
+  BAREA=b.dataset.barea;
+  bfLoad(); bfRender();
 })});
-INIT.brief=function(){if(INIT.brief.d)return; INIT.brief.d=1; bfRender()};
+INIT.brief=function(){if(INIT.brief.d)return; INIT.brief.d=1; bfLoad(); bfRender()};
 
 /* =========================================================
    KONTAKT / kopiowanie adresu
